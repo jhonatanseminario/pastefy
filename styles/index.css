@@ -1,3 +1,30 @@
-h1 {
-    color: blue;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Roboto", sans-serif;
+}
+
+.title {
+    color: #233241;
+    font-size: 64px;
+    font-weight: 500;
+    letter-spacing: -1.5px;
+    padding: 128px;
+    padding-bottom: 16px;
+    text-align: center;
+}
+
+.accent {
+    color: #4b69ff;
+    font-weight: 900;
+}
+
+.description {
+    color: #3c3c3cb3;
+    font-size: 20px;
+    text-align: center;
 }
