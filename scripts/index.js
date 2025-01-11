@@ -32,17 +32,32 @@ function getClient() {
 //*                             CREAR NUEVO PASTE                            *//
 //*==========================================================================*//
 
+function generateId() {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let id = '';
+    
+    for (let i = 0; i < 8; i++) {
+        const randomIndex = Math.floor(Math.random() * chars.length);
+        id += chars.charAt(randomIndex);
+    }
+    
+    return id;
+}
+
 async function sendPaste(pasteTitle, pasteText) {
     if (!pasteText) {
         return;
     }
+
+    const pasteId = generateId();
 
     try {
         const { error } = await getClient()
             .from("pastes")
             .insert([{
                 content: pasteText,
-                title: pasteTitle
+                title: pasteTitle,
+                slug: pasteId
             }]);
 
         if (error) {
