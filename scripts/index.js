@@ -9,6 +9,7 @@ import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js
 //*                     INICIALIZAR CONSTANTES GLOBALES                      *//
 //*==========================================================================*//
 
+const titleInput = document.querySelector("#titleInput");
 const pasteInput = document.querySelector("#pasteInput");
 const sendButton = document.querySelector("#sendButton");
 
@@ -31,16 +32,18 @@ function getClient() {
 //*                             CREAR NUEVO PASTE                            *//
 //*==========================================================================*//
 
-async function sendPaste(pasteText) {
+async function sendPaste(pasteTitle, pasteText) {
     if (!pasteText) {
-        alert("¡El campo de texto está vacío!");
         return;
     }
 
     try {
         const { error } = await getClient()
             .from("pastes")
-            .insert([{ paste: pasteText }]);
+            .insert([{
+                content: pasteText,
+                title: pasteTitle
+            }]);
 
         if (error) {
             console.error("Error al enviar el texto:", error);
@@ -58,7 +61,8 @@ async function sendPaste(pasteText) {
 
 window.addEventListener('DOMContentLoaded', () => {
     sendButton.addEventListener("click", () => {
+        const pasteTitle = titleInput.value;
         const pasteText = pasteInput.value;
-        sendPaste(pasteText);
+        sendPaste(pasteTitle, pasteText);
     });
 });
