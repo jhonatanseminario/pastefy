@@ -62,11 +62,46 @@ async function sendPaste(pasteTitle, pasteText) {
 
         if (error) {
             console.error("Error al enviar el texto:", error);
+            return;
         }
+
+        window.location.href = `/${pasteId}`;
 
     } catch (error) {
         console.error("Error inesperado:", error);
     }
+}
+
+
+//*==========================================================================*//
+//*                             RECUPERAR PASTES                             *//
+//*==========================================================================*//
+
+const slug = window.location.pathname.slice(1);
+
+async function fetchPaste(slug) {
+    try {
+        const { data, error } = await getClient()
+            .from("pastes")
+            .select("*")
+            .eq("slug", slug)
+            .single();
+
+        if (error) {
+            console.error("Error al recuperar el texto:", error);
+            return;
+        }
+
+        if (data) {
+            console.log({ title: data.title, content: data.content });
+        }
+    } catch (error) {
+        console.error("Error inesperado:", error);
+    }
+}
+
+if (slug) {
+    fetchPaste(slug);
 }
 
 
