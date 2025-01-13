@@ -71,6 +71,8 @@ async function sendPaste(pasteTitle, pasteText) {
             return;
         }
 
+        titleInput.value = "";
+        pasteInput.value = "";
         window.location.href = `/${pasteId}`;
 
     } catch (error) {
@@ -84,8 +86,14 @@ async function sendPaste(pasteTitle, pasteText) {
 //*==========================================================================*//
 
 function renderPage(data) {
-    pageTitle.className = "render-title";
-    pageTitle.textContent = data.title;
+    if (data.title) {
+        pageTitle.className = "render-title";
+        pageTitle.textContent = data.title
+    } else {
+        pageTitle.className = "render-title";
+        pageTitle.textContent = "Sin título",
+        pageTitle.style.fontStyle = "italic";
+    }     
 
     pageDescription.remove();
 
@@ -112,7 +120,7 @@ function renderPage(data) {
     newButton.classList.add("render-button");
     newButton.textContent = "Copiar texto";
     newButton.disabled = false;
-    
+
     newButton.addEventListener("click", () => {
         navigator.clipboard.writeText(data.content);
     });
@@ -169,5 +177,6 @@ window.addEventListener('DOMContentLoaded', () => {
         const pasteText = pasteInput.value;
         navigator.clipboard.writeText(pasteInput.value);
         sendPaste(pasteTitle, pasteText);
+        sendButton.disabled = true;
     });
 });
