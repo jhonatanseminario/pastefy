@@ -9,9 +9,15 @@ import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js
 //*                     INICIALIZAR CONSTANTES GLOBALES                      *//
 //*==========================================================================*//
 
-const titleInput = document.querySelector("#titleInput");
-const pasteInput = document.querySelector("#pasteInput");
-const sendButton = document.querySelector("#sendButton");
+const heroSection = document.querySelector("#hero");
+const pageTitle = document.querySelector(".title");
+const pageDescription = document.querySelector(".description");
+const pageBackground = document.querySelector(".background");
+const mainForm = document.querySelector(".form");
+const formLabel = document.querySelectorAll(".label");
+const titleInput = document.querySelector(".title-input");
+const pasteInput = document.querySelector(".paste-input");
+const sendButton = document.querySelector(".send-button");
 
 
 //*==========================================================================*//
@@ -77,6 +83,36 @@ async function sendPaste(pasteTitle, pasteText) {
 //*                             RECUPERAR PASTES                             *//
 //*==========================================================================*//
 
+function renderPage(data) {
+    pageTitle.className = "render-title";
+    pageTitle.textContent = data.title;
+
+    pageDescription.remove();
+
+    pageBackground.className = "render-background";
+    const backgrounClone = pageBackground.cloneNode(true);
+    backgrounClone.className = "background-clone";
+    heroSection.appendChild(backgrounClone);
+
+    mainForm.classList.add("render-form");
+    const newDiv = document.createElement("div");
+    newDiv.className = "render-content";
+    newDiv.textContent = data.content;
+    mainForm.appendChild(newDiv);
+    
+    formLabel.forEach(label => {
+        label.remove();
+    });
+
+    titleInput.remove();
+    pasteInput.remove();
+
+    const newButton = sendButton.cloneNode(true);
+    sendButton.parentNode.replaceChild(newButton, sendButton);
+    newButton.classList.add("render-button");
+    newButton.textContent = "Copiar texto";
+}
+
 const slug = window.location.pathname.slice(1);
 
 async function fetchPaste(slug) {
@@ -93,7 +129,7 @@ async function fetchPaste(slug) {
         }
 
         if (data) {
-            console.log({ title: data.title, content: data.content });
+            renderPage(data);
         }
     } catch (error) {
         console.error("Error inesperado:", error);

@@ -1,0 +1,58 @@
+.render-title {
+    color: rgba(35, 50, 65, 0.9);
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    padding: 96px 128px 16px;
+    text-align: center;
+}
+
+.render-background,
+.background-clone {
+    background: linear-gradient(
+        -45deg,
+        hsl(229 100% 60% / 40%),
+        hsl(231 80% 65% / 40%) 40%,
+        hsl(217 70% 55% / 40%) 45%,
+        hsl(229 100% 60% / 40%) 60%,
+        hsl(214 60% 50% / 40%)
+    );
+    border-radius: 50%;
+    filter: blur(192px);
+    height: 192px;
+    position: absolute;
+    top: -32px;
+    width: 33%;
+}
+
+.background-clone {
+    right: 0;
+}
+
+.render-form {
+    margin: 48px auto 96px auto;
+}
+
+.render-button {
+    font-size: 14px;
+    margin: 0 0 12px 6px;
+    padding: 12px 16px;
+    width: 120px;
+
+    &:focus {
+        outline-offset: 3px;
+    }
+}
+
+.render-content {
+    background-color: #ffffff;
+    border-radius: 8px;
+    border: 3px solid #e5e5e5;
+    color: #233241;
+    font-family: "Roboto Mono", "Courier New", Consolas, "Source Code Pro", Menlo, monospace;
+    font-size: 14px;
+    height: fit-content;
+    margin: 16px auto;
+    min-height: 240px;
+    padding: 24px;
+}
