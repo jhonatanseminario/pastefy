@@ -111,6 +111,11 @@ function renderPage(data) {
     sendButton.parentNode.replaceChild(newButton, sendButton);
     newButton.classList.add("render-button");
     newButton.textContent = "Copiar texto";
+    newButton.disabled = false;
+    
+    newButton.addEventListener("click", () => {
+        navigator.clipboard.writeText(data.content);
+    });
 }
 
 const slug = window.location.pathname.slice(1);
@@ -130,6 +135,9 @@ async function fetchPaste(slug) {
 
         if (data) {
             renderPage(data);
+            document.body.classList.remove("hidden");
+        } else {
+            document.body.classList.remove("hidden");
         }
     } catch (error) {
         console.error("Error inesperado:", error);
@@ -138,6 +146,8 @@ async function fetchPaste(slug) {
 
 if (slug) {
     fetchPaste(slug);
+} else {
+    document.body.classList.remove("hidden");
 }
 
 
@@ -146,9 +156,18 @@ if (slug) {
 //*==========================================================================*//
 
 window.addEventListener('DOMContentLoaded', () => {
+    sendButton.disabled = true;
+
+    pasteInput.addEventListener("input", () => {
+        pasteInput.value.trim() === ""
+            ? sendButton.disabled = true
+            : sendButton.disabled = false;
+    });
+
     sendButton.addEventListener("click", () => {
         const pasteTitle = titleInput.value;
         const pasteText = pasteInput.value;
+        navigator.clipboard.writeText(pasteInput.value);
         sendPaste(pasteTitle, pasteText);
     });
 });

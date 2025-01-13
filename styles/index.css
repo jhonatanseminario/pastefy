@@ -8,6 +8,10 @@ body {
     font-family: "Roboto", "Helvetica", "Arial", "Segoe UI", "Verdana", sans-serif;
 }
 
+.hidden {
+    display: none;
+}
+
 .title {
     color: #233241;
     font-size: 82px;
@@ -147,6 +151,20 @@ body {
     &:focus {
         outline: 3px solid rgba(75, 105, 255, 0.5);
         outline-offset: 4px;
+    }
+
+    &:disabled {
+        background: linear-gradient(
+            229deg,
+            hsl(229 100% 70%),
+            hsl(231 80% 75%) 40%,
+            hsl(217 70% 65%) 100%
+        );
+        box-shadow: none;
+        color: rgba(255, 255, 255, 0.5);
+        cursor: default;
+        opacity: 0.6;
+        transform: none;
     }
 }
 
