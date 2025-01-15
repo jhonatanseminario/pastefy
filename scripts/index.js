@@ -18,6 +18,7 @@ const formLabel = document.querySelectorAll(".label");
 const titleInput = document.querySelector(".title-input");
 const pasteInput = document.querySelector(".paste-input");
 const sendButton = document.querySelector(".send-button");
+const notification = document.querySelector(".notification");
 
 
 //*==========================================================================*//
@@ -71,6 +72,8 @@ async function sendPaste(pasteTitle, pasteText) {
             return;
         }
 
+        sessionStorage.setItem("copiedToClipboard", "true");
+
         titleInput.value = "";
         pasteInput.value = "";
         window.location.href = `/${pasteId}`;
@@ -86,41 +89,49 @@ async function sendPaste(pasteTitle, pasteText) {
 //*==========================================================================*//
 
 function renderPage(data) {
-    if (data.title) {
-        pageTitle.className = "render-title";
-        pageTitle.textContent = data.title
-    } else {
-        pageTitle.className = "render-title";
-        pageTitle.textContent = "Sin título",
-        pageTitle.style.fontStyle = "italic";
-    }     
 
+    // REMOVER ELEMENTOS
+    pageTitle.remove();
     pageDescription.remove();
-
-    pageBackground.className = "render-background";
-    const backgrounClone = pageBackground.cloneNode(true);
-    backgrounClone.className = "background-clone";
-    heroSection.appendChild(backgrounClone);
-
-    mainForm.classList.add("render-form");
-    const newDiv = document.createElement("div");
-    newDiv.className = "render-content";
-    newDiv.textContent = data.content;
-    mainForm.appendChild(newDiv);
-    
-    formLabel.forEach(label => {
-        label.remove();
-    });
-
     titleInput.remove();
     pasteInput.remove();
 
+    formLabel.forEach(label => {
+        label.remove();
+    });
+    
+    // CREAR ELEMENTOS
+    const newTitle = document.createElement("h2");
+    const backgrounClone = pageBackground.cloneNode(true);
     const newButton = sendButton.cloneNode(true);
-    sendButton.parentNode.replaceChild(newButton, sendButton);
+    const newDiv = document.createElement("div");
+
+    // MODIFICAR ELEMENTOS
+    pageBackground.className = "render-background";
+    backgrounClone.className = "background-clone";
+    mainForm.classList.add("render-form");
+    newDiv.className = "render-content";
+    newDiv.textContent = data.content;
     newButton.classList.add("render-button");
     newButton.textContent = "Copiar texto";
     newButton.disabled = false;
+    
+    if (data.title) {
+        newTitle.className = "render-title";
+        newTitle.textContent = data.title;
+    } else {
+        newTitle.className = "render-title";
+        newTitle.textContent = "Sin título",
+        newTitle.style.fontStyle = "italic";
+    }
 
+    // AÑADIR AL DOM
+    heroSection.appendChild(backgrounClone);
+    mainForm.appendChild(newDiv);
+    sendButton.parentNode.replaceChild(newButton, sendButton);
+    mainForm.insertBefore(newTitle, newButton);
+
+    // AÑADIR EVENTOS
     newButton.addEventListener("click", () => {
         navigator.clipboard.writeText(data.content);
     });
@@ -144,6 +155,19 @@ async function fetchPaste(slug) {
         if (data) {
             renderPage(data);
             document.body.classList.remove("hidden");
+
+            if (sessionStorage.getItem("copiedToClipboard") === "true") {
+                setTimeout(() => {
+                    notification.classList.remove("hidden-notification");
+                }, 600);
+            
+                setTimeout(() => {
+                    notification.classList.add("hidden-notification");
+                }, 3600);
+
+                sessionStorage.removeItem("copiedToClipboard");
+            }
+                     
         } else {
             document.body.classList.remove("hidden");
         }

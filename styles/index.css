@@ -137,13 +137,13 @@ body {
     width: 240px;
 
     &:hover {
-        transform: translateY(-2px);
+        transform: scale(1.01);
         box-shadow: 0 6px 14px rgba(75, 105, 255, 0.4),
             0 3px 6px rgba(0, 0, 0, 0.15);
     }
 
     &:active {
-        transform: translateY(0);
+        transform: scale(1);
         box-shadow: 0 2px 6px rgba(75, 105, 255, 0.2),
             0 1px 3px rgba(0, 0, 0, 0.1);
     }
@@ -166,6 +166,25 @@ body {
         opacity: 0.6;
         transform: none;
     }
+}
+
+.notification {
+    background-color: #222222;
+    border-radius: 8px;
+    bottom: 48px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    color: #ffffff;
+    cursor: default;
+    font-size: 16px;
+    padding: 12px 24px;
+    position: fixed;
+    right: 50%;
+    transform: translateX(50%);
+    transition: opacity 0.6s ease;
+}
+
+.hidden-notification {
+    opacity: 0;
 }
 
 ::selection {

@@ -1,10 +1,10 @@
 .render-title {
     color: rgba(35, 50, 65, 0.9);
-    font-size: 32px;
-    font-weight: 800;
+    font-size: 28px;
+    font-weight: 600;
+    margin: 16px 0 32px 8px;
     letter-spacing: -1px;
-    padding: 96px 128px 16px;
-    text-align: center;
+    text-align: left;
 }
 
 .render-background,
@@ -30,12 +30,13 @@
 }
 
 .render-form {
-    margin: 48px auto 96px auto;
+    margin: 96px auto 96px auto;
+    width: 900px;
 }
 
 .render-button {
     font-size: 14px;
-    margin: 0 0 12px 6px;
+    margin: 0 0 24px 6px;
     padding: 12px 16px;
     width: 120px;
 
@@ -54,5 +55,5 @@
     height: fit-content;
     margin: 16px auto;
     min-height: 240px;
-    padding: 24px;
+    padding: 28px;
 }
