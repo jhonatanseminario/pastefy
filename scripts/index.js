@@ -73,9 +73,6 @@ async function sendPaste(pasteTitle, pasteText) {
         }
 
         sessionStorage.setItem("copiedToClipboard", "true");
-
-        titleInput.value = "";
-        pasteInput.value = "";
         window.location.href = `/${pasteId}`;
 
     } catch (error) {
@@ -149,30 +146,36 @@ async function fetchPaste(slug) {
 
         if (error) {
             console.error("Error al recuperar el texto:", error);
+
+            if (error.code === 'PGRST116') {
+                window.location.href = "/";
+            }
+
             return;
         }
 
-        if (data) {
+        if (data && Object.keys(data).length > 0) {
             renderPage(data);
             document.body.classList.remove("hidden");
 
             if (sessionStorage.getItem("copiedToClipboard") === "true") {
                 setTimeout(() => {
                     notification.classList.remove("hidden-notification");
-                }, 600);
+                }, 400);
             
                 setTimeout(() => {
                     notification.classList.add("hidden-notification");
-                }, 3600);
+                }, 4400);
 
                 sessionStorage.removeItem("copiedToClipboard");
             }
-                     
+
         } else {
-            document.body.classList.remove("hidden");
+            window.location.href = "/";
         }
     } catch (error) {
         console.error("Error inesperado:", error);
+        window.location.href = "/";
     }
 }
 

@@ -169,18 +169,17 @@ body {
 }
 
 .notification {
-    background-color: #222222;
-    border-radius: 8px;
+    background-color: #333333;
+    border-radius: 5px;
     bottom: 48px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     color: #ffffff;
     cursor: default;
-    font-size: 16px;
-    padding: 12px 24px;
+    font-size: 14px;
+    padding: 10px 20px;
     position: fixed;
-    right: 50%;
-    transform: translateX(50%);
-    transition: opacity 0.6s ease;
+    right: 80px;
+    transition: opacity 1.2s ease;
 }
 
 .hidden-notification {

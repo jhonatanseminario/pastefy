@@ -56,4 +56,5 @@
     margin: 16px auto;
     min-height: 240px;
     padding: 28px;
+    white-space: pre-wrap;
 }
