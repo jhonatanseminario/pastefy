@@ -24,6 +24,10 @@ body {
         color: #4b69ff;
         font-weight: 900;
     }
+
+    @media only screen and (width < 800px) {
+        font-size: 54px;
+    }
 }
 
 .description {
@@ -31,6 +35,10 @@ body {
     font-size: 24px;
     padding: 0 32px 32px 32px;
     text-align: center;
+
+    @media only screen and (width < 800px) {
+        font-size: 16px;
+    }
 }
 
 .background {
@@ -63,6 +71,10 @@ body {
     margin: 64px auto 96px auto;
     padding: 32px 36px;
     width: 720px;
+
+    @media only screen and (width < 800px) {
+        width: 480px;
+    }
 }
 
 @keyframes shadowChange {
@@ -84,6 +96,10 @@ body {
     color: #233241;
     font-size: 20px;
     font-weight: 500;
+
+    @media only screen and (width < 800px) {
+        font-size: 14px;
+    }
 }
 
 .input {
@@ -106,6 +122,11 @@ body {
         outline: 3px solid rgb(75, 105, 255, 0.2);
         transition: all 0.3s ease;
     }
+
+    @media only screen and (width < 800px) {
+        font-size: 10px;
+        padding: 16px;
+    }
 }
 
 #titleInput {
@@ -114,6 +135,11 @@ body {
     height: 48px;
     min-height: 48px;
     margin-bottom: 32px;
+
+    @media only screen and (width < 800px) {
+        font-size: 12px;
+        padding: 16px;
+    }
 }
 
 .button {
@@ -165,6 +191,12 @@ body {
         cursor: default;
         opacity: 0.6;
         transform: none;
+    }
+
+    @media only screen and (width < 800px) {
+        font-size: 12px;
+        padding: 12px 20px;
+        width: 160;
     }
 }
 
