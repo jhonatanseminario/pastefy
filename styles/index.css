@@ -27,7 +27,6 @@ body {
 
     @media only screen and (800px > width) {
         font-size: 64px;
-        letter-spacing: -2px;
         padding: 96px 48px 16px 48px;
     }
 }
@@ -39,7 +38,7 @@ body {
     text-align: center;
 
     @media only screen and (800px > width) {
-        font-size: 16px;
+        font-size: 18px;
     }
 }
 
@@ -114,6 +113,7 @@ body {
 
     @media only screen and (800px > width) {
         font-size: 10px;
+        min-height: 240px;
         padding: 16px;
     }
 }
@@ -184,7 +184,7 @@ body {
 
     @media only screen and (800px > width) {
         border-radius: 4px;
-        font-size: 12px;
+        font-size: 16px;
         padding: 12px 20px;
         width: 160px;
     }
