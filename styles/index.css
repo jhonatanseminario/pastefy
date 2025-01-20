@@ -27,6 +27,7 @@ body {
 
     @media only screen and (800px > width) {
         font-size: 64px;
+        letter-spacing: -4px;
         padding: 96px 48px 16px 48px;
     }
 }
@@ -39,6 +40,7 @@ body {
 
     @media only screen and (800px > width) {
         font-size: 18px;
+        padding: 0 32px;
     }
 }
 
