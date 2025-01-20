@@ -8,7 +8,7 @@
 
 
     @media only screen and (800px > width) {
-        font-size: 22px;
+        font-size: 20px;
     }
 }
 
@@ -43,11 +43,13 @@
     }
 
     @media only screen and (800px > width > 600px) {
+        margin: 64px auto 64px auto;
         padding: 22px 24px;
         width: 480px;
     }
 
     @media only screen and (600px > width) {
+        margin: 64px auto 64px auto;
         padding: 22px 24px;
         width: 360px;
     }
@@ -65,6 +67,7 @@
 
     @media only screen and (800px > width) {
         font-size: 12px;
+        margin: 0 0 18px 6px;
         padding: 10px 12px;
         width: 100px;
     }
