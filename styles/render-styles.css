@@ -2,7 +2,7 @@
     color: rgba(35, 50, 65, 0.9);
     font-size: 28px;
     font-weight: 600;
-    margin: 16px 0 32px 8px;
+    margin: 16px 0 24px 8px;
     letter-spacing: -1px;
     text-align: left;
 
@@ -66,7 +66,7 @@
     }
 
     @media only screen and (800px > width) {
-        font-size: 12px;
+        font-size: 11px;
         margin: 0 0 18px 6px;
         padding: 10px 12px;
         width: 100px;
