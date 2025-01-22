@@ -73,6 +73,7 @@ async function sendPaste(pasteTitle, pasteText) {
         }
 
         sessionStorage.setItem("copiedToClipboard", "true");
+        await navigator.clipboard.writeText(`${window.location.origin}/${pasteId}`);
         window.location.href = `/${pasteId}`;
 
     } catch (error) {
@@ -207,7 +208,6 @@ window.addEventListener('DOMContentLoaded', () => {
     sendButton.addEventListener("click", () => {
         const pasteTitle = titleInput.value;
         const pasteText = pasteInput.value;
-        navigator.clipboard.writeText(pasteInput.value);
         sendPaste(pasteTitle, pasteText);
         sendButton.disabled = true;
     });
