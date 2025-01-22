@@ -23,11 +23,11 @@
         hsl(214 60% 50% / 40%)
     );
     border-radius: 50%;
-    filter: blur(192px);
-    height: 192px;
+    filter: blur(144px);
+    height: 33%;
     position: absolute;
     top: -32px;
-    width: 33%;
+    width: 50%;
 }
 
 .background-clone {
@@ -43,12 +43,16 @@
     }
 
     @media only screen and (800px > width > 600px) {
+        box-shadow: -3px 5px 12px rgba(75, 105, 255, 0.2),
+            -3px 2px 6px rgba(0, 0, 0, 0.08);
         margin: 64px auto 64px auto;
         padding: 22px 24px;
         width: 480px;
     }
 
     @media only screen and (600px > width) {
+        box-shadow: -3px 5px 12px rgba(75, 105, 255, 0.2),
+            -3px 2px 6px rgba(0, 0, 0, 0.08);
         margin: 64px auto 64px auto;
         padding: 22px 24px;
         width: 360px;
