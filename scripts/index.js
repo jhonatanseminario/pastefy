@@ -136,6 +136,11 @@ function renderPage(data) {
 
 const slug = window.location.pathname.slice(1);
 
+function isMobile() {
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    return /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent.toLowerCase());
+}
+
 async function fetchPaste(slug) {
     try {
         const { data, error } = await getClient()
@@ -158,7 +163,7 @@ async function fetchPaste(slug) {
             renderPage(data);
             document.body.classList.remove("hidden");
 
-            if (sessionStorage.getItem("copiedToClipboard") === "true") {
+            if (sessionStorage.getItem("copiedToClipboard") === "true" && !isMobile()) {
                 setTimeout(() => {
                     notification.classList.remove("hidden-notification");
                 }, 400);
