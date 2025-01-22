@@ -89,6 +89,7 @@
     min-height: 240px;
     padding: 28px;
     white-space: pre-wrap;
+    word-wrap: break-word;
 
     @media only screen and (800px > width) {
         border: 2px solid #e5e5e5;
