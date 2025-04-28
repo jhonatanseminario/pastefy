@@ -119,7 +119,7 @@ function renderPage(data) {
         newTitle.textContent = data.title;
     } else {
         newTitle.className = "render-title";
-        newTitle.textContent = "Sin título",
+        newTitle.textContent = "Sin título";
         newTitle.style.fontStyle = "italic";
     }
 
