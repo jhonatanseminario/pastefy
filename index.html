@@ -3,34 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pastefy</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wdth,wght@0,75..100,100..900;1,75..100,100..900&display=swap">
-    <link rel="stylesheet" href="/styles/index.css">
-    <link rel="stylesheet" href="/styles/render-styles.css">
-    <script type="module" src="scripts/index.js" defer></script>
+    <title>Pastefy - Comparte texto fácilmente</title>
+
+    <link rel="stylesheet" href="./styles/fonts.css">
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="stylesheet" href="./styles/paste-view.css">
+    <script type="module" src="./scripts/main.js" defer></script>
+
+    <link rel="icon" href="./assets/icons/favicon.svg" type="image/svg+xml">
     <meta name="theme-color" content="#4b69ff">
-    <link rel="shortcut icon" href="/assets/icons/favicon.svg" type="image/x-icon">
     <meta name="author" content="Jhonatan Seminario">
 </head>
 <body class="hidden">
     <main>
         <section id="hero">
-                <h1 class="title">Bienvenido a <span class="accent">Pastefy</span></h1>
-                <p class="description">Pegar y compartir nunca fue tan fácil.</p>
-                <div class="background"></div>
+            <h1 class="title">Bienvenido a <span class="accent">Pastefy</span></h1>
+            <p class="description">Pegar y compartir nunca fue tan fácil.</p>
+            <div class="background" aria-hidden="true"></div>
         </section>
-        <div class="form">
-            <label class="label" for="titleInput">Título</label>
-            <input class="input title-input" type="text" id="titleInput" placeholder="Escribe un título, si lo prefieres" maxlength="128" autocomplete="off">
 
-            <label class="label" for="pasteInput">Contenido</label>
-            <textarea class="input paste-input" id="pasteInput" placeholder="Introduce tu texto aquí..."
-            maxlength="100000" autocomplete="off"></textarea>
+        <form class="form" aria-label="Formulario para crear nuevo paste">
+            <label class="label" for="title-input">Título</label>
+            <input
+                id="title-input"
+                class="input title-input"
+                type="text"
+                placeholder="Escribe un título, si lo prefieres"
+                maxlength="128"
+                autocomplete="off"
+            >
 
-            <button class="button send-button" id="sendButton">Crear</button>
-        </div>
+            <label class="label" for="paste-input">Contenido</label>
+            <textarea
+                id="paste-input"
+                class="input paste-input"
+                required
+                placeholder="Introduce tu texto aquí..."
+                maxlength="100000"
+                autocomplete="off"
+            ></textarea>
+
+            <button class="button send-button">Crear</button>
+        </form>
+
         <div class="notification hidden-notification">El enlace ha sido copiado al portapapeles</div>
     </main>
 </body>
