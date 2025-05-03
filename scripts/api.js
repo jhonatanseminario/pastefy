@@ -39,5 +39,3 @@ export async function sendPaste(pasteTitle, pasteText) {
         console.error("Error inesperado:", error);
     }
 }
-
-
