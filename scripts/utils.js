@@ -1,5 +1,32 @@
-export const $ = selector => document.querySelector(selector);
-export const $$ = selector => document.querySelectorAll(selector);
+export const $ = selector => {
+    if (typeof selector !== 'string' || selector.trim() === '') {
+        console.error('$: Se requiere un selector de string no vacío.');
+        return null;
+    }
+
+    try {
+        return document.querySelector(selector);
+    }
+    catch (e) {
+        console.error(`$: Selector inválido "${selector}".`, e);
+        return null;
+    }
+};
+
+export const $$ = selector => {
+    if (typeof selector !== 'string' || selector.trim() === '') {
+        console.error('$$: Se requiere un selector de string no vacío.');
+        return [];
+    }
+
+    try {
+        return Array.from(document.querySelectorAll(selector));
+    }
+    catch (e) {
+        console.error(`$$: Selector inválido "${selector}".`, e);
+        return [];
+    }
+};
 
 export function isMobile() {
     const userAgent = navigator.userAgent || navigator.vendor || window.opera;

@@ -1,11 +1,6 @@
 import { $, $$, isMobile } from './utils.js';
 import { getClient, sendPaste } from './api.js';
 
-
-//*==========================================================================*//
-//*                     INICIALIZAR CONSTANTES GLOBALES                      *//
-//*==========================================================================*//
-
 const heroSection = $("#hero");
 const pageTitle = $(".title");
 const pageDescription = $(".description");
@@ -18,11 +13,6 @@ const sendButton = $(".send-button");
 const notification = $(".notification");
 
 sendPaste();
-
-
-//*==========================================================================*//
-//*                             RECUPERAR PASTES                             *//
-//*==========================================================================*//
 
 function renderPage(data) {
 
@@ -123,11 +113,6 @@ if (slug) {
 } else {
     document.body.classList.remove("hidden");
 }
-
-
-//*==========================================================================*//
-//*                  AGREGAR ESCUCHADORES AL CARGAR EL DOM                   *//
-//*==========================================================================*//
 
 window.addEventListener('DOMContentLoaded', () => {
     sendButton.disabled = true;
