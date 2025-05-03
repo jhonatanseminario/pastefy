@@ -1,5 +1,5 @@
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.0.0/+esm";
-import { generateId } from "./utils.js";
+import { generateSlug } from "./utils.js";
 
 export function getClient() {
     const supabaseUrl = "https://fbogwkdfwzdxdriwecbi.supabase.co";
@@ -15,7 +15,7 @@ export async function sendPaste(pasteTitle, pasteText) {
         return;
     }
 
-    const pasteId = generateId();
+    const pasteId = generateSlug();
 
     try {
         const { error } = await getClient()
