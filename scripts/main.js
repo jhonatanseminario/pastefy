@@ -3,22 +3,23 @@
 //!==========================================================================!//
 
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.0.0/+esm";
+import { $, $$ } from './utils/dom.js';
 
 
 //*==========================================================================*//
 //*                     INICIALIZAR CONSTANTES GLOBALES                      *//
 //*==========================================================================*//
 
-const heroSection = document.querySelector("#hero");
-const pageTitle = document.querySelector(".title");
-const pageDescription = document.querySelector(".description");
-const pageBackground = document.querySelector(".background");
-const mainForm = document.querySelector(".form");
-const formLabel = document.querySelectorAll(".label");
-const titleInput = document.querySelector(".title-input");
-const pasteInput = document.querySelector(".paste-input");
-const sendButton = document.querySelector(".send-button");
-const notification = document.querySelector(".notification");
+const heroSection = $("#hero");
+const pageTitle = $(".title");
+const pageDescription = $(".description");
+const pageBackground = $(".background");
+const mainForm = $(".form");
+const formLabel = $$(".label");
+const titleInput = $(".title-input");
+const pasteInput = $(".paste-input");
+const sendButton = $(".send-button");
+const notification = $(".notification");
 
 
 //*==========================================================================*//
