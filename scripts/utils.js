@@ -28,10 +28,10 @@ export const $$ = selector => {
     }
 };
 
-export function isMobile() {
-    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-    return /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent.toLowerCase());
-}
+export const isSmallScreen = () => {
+    const breakpoint = 768;
+    return window.matchMedia(`(max-width: ${breakpoint}px)`).matches;
+};
 
 export function generateId() {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

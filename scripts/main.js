@@ -1,4 +1,4 @@
-import { $, $$, isMobile } from './utils.js';
+import { $, $$, isSmallScreen } from './utils.js';
 import { getClient, sendPaste } from './api.js';
 
 const heroSection = $("#hero");
@@ -87,7 +87,7 @@ async function fetchPaste(slug) {
             renderPage(data);
             document.body.classList.remove("hidden");
 
-            if (sessionStorage.getItem("copiedToClipboard") === "true" && !isMobile()) {
+            if (sessionStorage.getItem("copiedToClipboard") === "true" && !isSmallScreen()) {
                 setTimeout(() => {
                     notification.classList.remove("hidden-notification");
                 }, 400);
