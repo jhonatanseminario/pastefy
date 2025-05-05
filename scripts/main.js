@@ -1,120 +1,86 @@
 import { $, $$, isSmallScreen } from './utils.js';
 import { getClient, sendPaste } from './api.js';
+import { renderPasteView } from './ui.js';
 
-const heroSection = $("#hero");
-const pageTitle = $(".title");
-const pageDescription = $(".description");
-const pageBackground = $(".background");
-const mainForm = $(".form");
-const formLabel = $$(".label");
-const titleInput = $(".title-input");
-const pasteInput = $(".paste-input");
-const sendButton = $(".send-button");
-const notification = $(".notification");
+window.addEventListener('DOMContentLoaded', () => {    
+    const $hero = $("#hero");
+    const $title = $(".title");
+    const $subtitle = $(".subtitle");
+    const $background = $(".background");
+    const mainForm = $(".form");
+    const formLabels = $$(".label");
+    const titleInput = $(".title-input");
+    const pasteInput = $(".paste-input");
+    const sendButton = $(".send-button");
+    const notification = $(".notification");
 
-sendPaste();
+    const domRefs = {
+        $hero,
+        $title,
+        $subtitle,
+        $background,
+        mainForm,
+        formLabels,
+        titleInput,
+        pasteInput,
+        sendButton,
+        notification
+    };
 
-function renderPage(data) {
+    sendPaste();
 
-    // REMOVER ELEMENTOS
-    pageTitle.remove();
-    pageDescription.remove();
-    titleInput.remove();
-    pasteInput.remove();
+    const slug = window.location.pathname.slice(1);
 
-    formLabel.forEach(label => {
-        label.remove();
-    });
-    
-    // CREAR ELEMENTOS
-    const newTitle = document.createElement("h2");
-    const backgrounClone = pageBackground.cloneNode(true);
-    const newButton = sendButton.cloneNode(true);
-    const newDiv = document.createElement("div");
+    async function fetchPaste(slug) {
+        try {
+            const { data, error } = await getClient()
+                .from("pastes")
+                .select("*")
+                .eq("slug", slug)
+                .single();
 
-    // MODIFICAR ELEMENTOS
-    pageBackground.className = "render-background";
-    backgrounClone.className = "background-clone";
-    mainForm.classList.add("render-form");
-    newDiv.className = "render-content";
-    newDiv.textContent = data.content;
-    newButton.classList.add("render-button");
-    newButton.textContent = "Copiar texto";
-    newButton.disabled = false;
-    
-    if (data.title) {
-        newTitle.className = "render-title";
-        newTitle.textContent = data.title;
-    } else {
-        newTitle.className = "render-title";
-        newTitle.textContent = "Sin título";
-        newTitle.style.fontStyle = "italic";
-    }
+            if (error) {
+                console.error("Error al recuperar el texto:", error);
 
-    // AÑADIR AL DOM
-    heroSection.appendChild(backgrounClone);
-    mainForm.appendChild(newDiv);
-    sendButton.parentNode.replaceChild(newButton, sendButton);
-    mainForm.insertBefore(newTitle, newButton);
+                if (error.code === 'PGRST116') {
+                    window.location.href = "/";
+                }
 
-    // AÑADIR EVENTOS
-    newButton.addEventListener("click", () => {
-        navigator.clipboard.writeText(data.content);
-    });
-}
+                return;
+            }
 
-const slug = window.location.pathname.slice(1);
+            if (data && Object.keys(data).length > 0) {
+                renderPasteView(data, domRefs);
+                document.body.classList.remove("hidden");
 
-async function fetchPaste(slug) {
-    try {
-        const { data, error } = await getClient()
-            .from("pastes")
-            .select("*")
-            .eq("slug", slug)
-            .single();
+                if (sessionStorage.getItem("copiedToClipboard") === "true" && !isSmallScreen()) {
+                    setTimeout(() => {
+                        notification.classList.remove("hidden-notification");
+                    }, 400);
+                
+                    setTimeout(() => {
+                        notification.classList.add("hidden-notification");
+                    }, 4400);
 
-        if (error) {
-            console.error("Error al recuperar el texto:", error);
+                    sessionStorage.removeItem("copiedToClipboard");
+                }
 
-            if (error.code === 'PGRST116') {
+            } else {
                 window.location.href = "/";
             }
-
-            return;
-        }
-
-        if (data && Object.keys(data).length > 0) {
-            renderPage(data);
-            document.body.classList.remove("hidden");
-
-            if (sessionStorage.getItem("copiedToClipboard") === "true" && !isSmallScreen()) {
-                setTimeout(() => {
-                    notification.classList.remove("hidden-notification");
-                }, 400);
-            
-                setTimeout(() => {
-                    notification.classList.add("hidden-notification");
-                }, 4400);
-
-                sessionStorage.removeItem("copiedToClipboard");
-            }
-
-        } else {
+        } catch (error) {
+            console.error("Error inesperado:", error);
             window.location.href = "/";
         }
-    } catch (error) {
-        console.error("Error inesperado:", error);
-        window.location.href = "/";
     }
-}
 
-if (slug) {
-    fetchPaste(slug);
-} else {
-    document.body.classList.remove("hidden");
-}
+    if (slug) {
+        fetchPaste(slug);
+    } else {
+        document.body.classList.remove("hidden");
+    }
 
-window.addEventListener('DOMContentLoaded', () => {
+
     sendButton.disabled = true;
 
     pasteInput.addEventListener("input", () => {
