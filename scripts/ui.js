@@ -1,33 +1,35 @@
 export const renderPasteView = (data, domRefs) => {
     const {
-        $hero,
-        $title,
-        $subtitle,
-        $background,
-        titleInput,
-        pasteInput,
-        formLabels,
-        mainForm,
-        sendButton,
+        $heroSection,
+        $heroTitle,
+        $heroSubtitle,
+        $pageBackground,
+        $mainForm,
+        $formLabels,
+        $titleInput,
+        $pasteInput,
+        $sendButton,
     } = domRefs;
 
-    if ($title?.remove) $title.remove();
-    if ($subtitle?.remove) $subtitle.remove();
-    if (titleInput?.remove) titleInput.remove();
-    if (pasteInput?.remove) pasteInput.remove();
 
-    if (formLabels) formLabels.forEach(label => {
-         if (label?.remove) label.remove();
+    if ($heroTitle?.remove) $heroTitle.remove();
+    if ($heroSubtitle?.remove) $heroSubtitle.remove();
+    if ($titleInput?.remove) $titleInput.remove();
+    if ($pasteInput?.remove) $pasteInput.remove();
+
+    if ($formLabels) $formLabels.forEach( formLabel => {
+        if (formLabel?.remove) formLabel.remove();
     });
-    
+
+
     const newTitle = document.createElement("h2");
-    const backgrounClone = $background.cloneNode(true);
-    const newButton = sendButton.cloneNode(true);
+    const backgrounClone = $pageBackground.cloneNode(true);
+    const newButton = $sendButton.cloneNode(true);
     const newDiv = document.createElement("div");
 
-    $background.className = "render-background";
+    $pageBackground.className = "render-background";
     backgrounClone.className = "background-clone";
-    mainForm.classList.add("render-form");
+    $mainForm.classList.add("render-form");
     newDiv.className = "render-content";
     newDiv.textContent = data.content;
     newButton.classList.add("render-button");
@@ -43,10 +45,10 @@ export const renderPasteView = (data, domRefs) => {
         newTitle.style.fontStyle = "italic";
     }
 
-    $hero.appendChild(backgrounClone);
-    mainForm.appendChild(newDiv);
-    sendButton.parentNode.replaceChild(newButton, sendButton);
-    mainForm.insertBefore(newTitle, newButton);
+    $heroSection.appendChild(backgrounClone);
+    $mainForm.appendChild(newDiv);
+    $sendButton.parentNode.replaceChild(newButton, $sendButton);
+    $mainForm.insertBefore(newTitle, newButton);
 
     newButton.addEventListener("click", () => {
         navigator.clipboard.writeText(data.content);

@@ -3,28 +3,28 @@ import { getClient, sendPaste } from './api.js';
 import { renderPasteView } from './ui.js';
 
 window.addEventListener('DOMContentLoaded', () => {    
-    const $hero = $("#hero");
-    const $title = $(".title");
-    const $subtitle = $(".subtitle");
-    const $background = $(".background");
-    const mainForm = $(".form");
-    const formLabels = $$(".label");
-    const titleInput = $(".title-input");
-    const pasteInput = $(".paste-input");
-    const sendButton = $(".send-button");
-    const notification = $(".notification");
+    const $heroSection = $("#hero");
+    const $heroTitle = $(".title");
+    const $heroSubtitle = $(".subtitle");
+    const $pageBackground = $(".background");
+    const $mainForm = $(".form");
+    const $formLabels = $$(".label");
+    const $titleInput = $(".title-input");
+    const $pasteInput = $(".paste-input");
+    const $sendButton = $(".send-button");
+    const $notification = $(".notification");
 
     const domRefs = {
-        $hero,
-        $title,
-        $subtitle,
-        $background,
-        mainForm,
-        formLabels,
-        titleInput,
-        pasteInput,
-        sendButton,
-        notification
+        $heroSection,
+        $heroTitle,
+        $heroSubtitle,
+        $pageBackground,
+        $mainForm,
+        $formLabels,
+        $titleInput,
+        $pasteInput,
+        $sendButton,
+        $notification
     };
 
     sendPaste();
@@ -55,11 +55,11 @@ window.addEventListener('DOMContentLoaded', () => {
 
                 if (sessionStorage.getItem("copiedToClipboard") === "true" && !isSmallScreen()) {
                     setTimeout(() => {
-                        notification.classList.remove("hidden-notification");
+                        $notification.classList.remove("hidden-notification");
                     }, 400);
                 
                     setTimeout(() => {
-                        notification.classList.add("hidden-notification");
+                        $notification.classList.add("hidden-notification");
                     }, 4400);
 
                     sessionStorage.removeItem("copiedToClipboard");
@@ -81,18 +81,18 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    sendButton.disabled = true;
+    $sendButton.disabled = true;
 
-    pasteInput.addEventListener("input", () => {
-        pasteInput.value.trim() === ""
-            ? sendButton.disabled = true
-            : sendButton.disabled = false;
+    $pasteInput.addEventListener("input", () => {
+        $pasteInput.value.trim() === ""
+            ? $sendButton.disabled = true
+            : $sendButton.disabled = false;
     });
 
-    sendButton.addEventListener("click", () => {
-        const pasteTitle = titleInput.value;
-        const pasteText = pasteInput.value;
+    $sendButton.addEventListener("click", () => {
+        const pasteTitle = $titleInput.value;
+        const pasteText = $pasteInput.value;
         sendPaste(pasteTitle, pasteText);
-        sendButton.disabled = true;
+        $sendButton.disabled = true;
     });
 });
