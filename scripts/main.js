@@ -8,7 +8,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const $heroSubtitle = $(".subtitle");
     const $pageBackground = $(".background");
     const $mainForm = $(".form");
-    const $formLabels = $$(".label");
+    const $$formLabels = $$(".label");
     const $titleInput = $(".title-input");
     const $pasteInput = $(".paste-input");
     const $sendButton = $(".send-button");
@@ -20,7 +20,7 @@ window.addEventListener('DOMContentLoaded', () => {
         $heroSubtitle,
         $pageBackground,
         $mainForm,
-        $formLabels,
+        $$formLabels,
         $titleInput,
         $pasteInput,
         $sendButton,

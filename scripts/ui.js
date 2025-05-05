@@ -3,9 +3,8 @@ export const renderPasteView = (data, domRefs) => {
         $heroSection,
         $heroTitle,
         $heroSubtitle,
-        $pageBackground,
         $mainForm,
-        $formLabels,
+        $$formLabels,
         $titleInput,
         $pasteInput,
         $sendButton,
@@ -17,40 +16,41 @@ export const renderPasteView = (data, domRefs) => {
     if ($titleInput?.remove) $titleInput.remove();
     if ($pasteInput?.remove) $pasteInput.remove();
 
-    if ($formLabels) $formLabels.forEach( formLabel => {
-        if (formLabel?.remove) formLabel.remove();
+    if ($$formLabels) $$formLabels.forEach( $formLabel => {
+        if ($formLabel?.remove) $formLabel.remove();
     });
 
 
-    const newTitle = document.createElement("h2");
-    const backgrounClone = $pageBackground.cloneNode(true);
-    const newButton = $sendButton.cloneNode(true);
-    const newDiv = document.createElement("div");
+    const $newBackground = document.createElement('div');
+    const $pasteTitle = document.createElement('h1');
+    const $newTextarea = document.createElement('div');
+    const $copyButton = document.createElement('button');
 
-    $pageBackground.className = "render-background";
-    backgrounClone.className = "background-clone";
-    $mainForm.classList.add("render-form");
-    newDiv.className = "render-content";
-    newDiv.textContent = data.content;
-    newButton.classList.add("render-button");
-    newButton.textContent = "Copiar texto";
-    newButton.disabled = false;
-    
-    if (data.title) {
-        newTitle.className = "render-title";
-        newTitle.textContent = data.title;
-    } else {
-        newTitle.className = "render-title";
-        newTitle.textContent = "Sin título";
-        newTitle.style.fontStyle = "italic";
-    }
 
-    $heroSection.appendChild(backgrounClone);
-    $mainForm.appendChild(newDiv);
-    $sendButton.parentNode.replaceChild(newButton, $sendButton);
-    $mainForm.insertBefore(newTitle, newButton);
+    if ($newBackground) $newBackground.className = 'new-background';
+    if ($mainForm) $mainForm.classList.add('rendered-form');
+    $newTextarea.className = 'paste-content';
+    $newTextarea.textContent = data.content;
+    $copyButton.classList.add('button', 'render-button');
+    $copyButton.textContent = 'Copiar texto';
 
-    newButton.addEventListener("click", () => {
+    $copyButton.addEventListener("click", (event) => {
+        event.preventDefault();
         navigator.clipboard.writeText(data.content);
     });
+    
+    if (data.title && data.title.trim() !== "") {
+        $pasteTitle.className = "render-title";
+        $pasteTitle.textContent = data.title;
+    } else {
+        $pasteTitle.className = "render-title";
+        $pasteTitle.textContent = "Sin título";
+        $pasteTitle.style.fontStyle = "italic";
+    }
+
+
+    $heroSection.parentNode.insertBefore($newBackground, $heroSection);
+    $mainForm.appendChild($newTextarea);
+    $sendButton.parentNode.replaceChild($copyButton, $sendButton);
+    $mainForm.insertBefore($pasteTitle, $copyButton);
 }

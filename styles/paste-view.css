@@ -12,8 +12,8 @@
     }
 }
 
-.render-background,
-.background-clone {
+.background,
+.new-background {
     background: linear-gradient(
         -45deg,
         hsl(229 100% 60% / 40%),
@@ -30,11 +30,11 @@
     width: 50%;
 }
 
-.background-clone {
+.new-background {
     right: 0;
 }
 
-.render-form {
+.rendered-form {
     margin: 96px auto 96px auto;
     width: 900px;
 
@@ -77,7 +77,7 @@
     }
 }
 
-.render-content {
+.paste-content {
     background-color: #ffffff;
     border-radius: 8px;
     border: 3px solid #e5e5e5;
