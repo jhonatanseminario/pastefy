@@ -28,7 +28,7 @@ export const renderPasteView = (data, domRefs) => {
 
 
     $newBackground.className = 'new-background';
-    $mainForm.classList.add('rendered-form');
+    if ($mainForm) $mainForm.classList.add('rendered-form');
     $pasteTitle.className = 'render-title';
     
     if (data.title && data.title.trim() !== '') {
@@ -43,8 +43,7 @@ export const renderPasteView = (data, domRefs) => {
     $copyButton.classList.add('button', 'render-button');
     $copyButton.textContent = 'Copiar texto';
 
-    
-    $heroSection.parentNode.insertBefore($newBackground, $heroSection);
+    if ($heroSection && $heroSection.parentNode) $heroSection.parentNode.insertBefore($newBackground, $heroSection);
 
     if ($mainForm) {
         $mainForm.appendChild($pasteContent);

@@ -1,6 +1,5 @@
-import { $, $$, isSmallScreen } from './utils.js';
-import { getClient, sendPaste } from './api.js';
-import { renderPasteView } from './ui.js';
+import { sendPaste, fetchPaste } from './api.js';
+import { $, $$ } from './utils.js';
 
 window.addEventListener('DOMContentLoaded', () => {    
     const $heroSection = $("#hero");
@@ -31,63 +30,11 @@ window.addEventListener('DOMContentLoaded', () => {
 
     const slug = window.location.pathname.slice(1);
 
-    async function fetchPaste(slug) {
-        try {
-            const { data, error } = await getClient()
-                .from("pastes")
-                .select("*")
-                .eq("slug", slug)
-                .single();
-
-            if (error) {
-                console.error("Error al recuperar el texto:", error);
-
-                if (error.code === 'PGRST116') {
-                    window.location.href = "/";
-                }
-
-                return;
-            }
-
-            if (data && Object.keys(data).length > 0) {
-                const newElements = renderPasteView(data, domRefs);
-
-                if (newElements && newElements.$copyButton) {
-                    newElements.$copyButton.addEventListener("click", async (event) => {
-                        event.preventDefault();
-                        await navigator.clipboard.writeText(data.content);
-                    });
-                }
-
-                document.body.classList.remove("hidden");
-
-                if (sessionStorage.getItem("copiedToClipboard") === "true" && !isSmallScreen()) {
-                    setTimeout(() => {
-                        $notification.classList.remove("hidden-notification");
-                    }, 400);
-                
-                    setTimeout(() => {
-                        $notification.classList.add("hidden-notification");
-                    }, 4400);
-
-                    sessionStorage.removeItem("copiedToClipboard");
-                }
-
-            } else {
-                window.location.href = "/";
-            }
-        } catch (error) {
-            console.error("Error inesperado:", error);
-            window.location.href = "/";
-        }
-    }
-
     if (slug) {
-        fetchPaste(slug);
+        fetchPaste(slug, domRefs);
     } else {
         document.body.classList.remove("hidden");
     }
-
 
     $sendButton.disabled = true;
 

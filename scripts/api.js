@@ -1,5 +1,6 @@
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.0.0/+esm";
-import { generateSlug } from "./utils.js";
+import { isSmallScreen, generateSlug } from "./utils.js";
+import { renderPasteView } from './ui.js';
 
 export function getClient() {
     const supabaseUrl = "https://fbogwkdfwzdxdriwecbi.supabase.co";
@@ -37,5 +38,56 @@ export async function sendPaste(pasteTitle, pasteText) {
 
     } catch (error) {
         console.error("Error inesperado:", error);
+    }
+}
+
+export async function fetchPaste(slug, domRefs) {
+    try {
+        const { data, error } = await getClient()
+            .from("pastes")
+            .select("*")
+            .eq("slug", slug)
+            .single();
+
+        if (error) {
+            console.error("Error al recuperar el texto:", error);
+
+            if (error.code === 'PGRST116') {
+                window.location.href = "/";
+            }
+
+            return;
+        }
+
+        if (data && Object.keys(data).length > 0) {
+            const newElements = renderPasteView(data, domRefs);
+
+            if (newElements && newElements.$copyButton) {
+                newElements.$copyButton.addEventListener("click", async (event) => {
+                    event.preventDefault();
+                    await navigator.clipboard.writeText(data.content);
+                });
+            }
+
+            document.body.classList.remove("hidden");
+
+            if (sessionStorage.getItem("copiedToClipboard") === "true" && !isSmallScreen()) {
+                setTimeout(() => {
+                    $notification.classList.remove("hidden-notification");
+                }, 400);
+            
+                setTimeout(() => {
+                    $notification.classList.add("hidden-notification");
+                }, 4400);
+
+                sessionStorage.removeItem("copiedToClipboard");
+            }
+
+        } else {
+            window.location.href = "/";
+        }
+    } catch (error) {
+        console.error("Error inesperado:", error);
+        window.location.href = "/";
     }
 }
