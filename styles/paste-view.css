@@ -99,3 +99,7 @@
         padding: 16px;
     }
 }
+
+.no-title {
+    font-style: italic;
+}

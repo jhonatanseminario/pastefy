@@ -50,7 +50,15 @@ window.addEventListener('DOMContentLoaded', () => {
             }
 
             if (data && Object.keys(data).length > 0) {
-                renderPasteView(data, domRefs);
+                const newElements = renderPasteView(data, domRefs);
+
+                if (newElements && newElements.$copyButton) {
+                    newElements.$copyButton.addEventListener("click", async (event) => {
+                        event.preventDefault();
+                        await navigator.clipboard.writeText(data.content);
+                    });
+                }
+
                 document.body.classList.remove("hidden");
 
                 if (sessionStorage.getItem("copiedToClipboard") === "true" && !isSmallScreen()) {
