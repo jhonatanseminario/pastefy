@@ -23,34 +23,46 @@ export const renderPasteView = (data, domRefs) => {
 
     const $newBackground = document.createElement('div');
     const $pasteTitle = document.createElement('h1');
-    const $newTextarea = document.createElement('div');
+    const $pasteContent = document.createElement('div');
     const $copyButton = document.createElement('button');
 
 
-    if ($newBackground) $newBackground.className = 'new-background';
-    if ($mainForm) $mainForm.classList.add('rendered-form');
-    $newTextarea.className = 'paste-content';
-    $newTextarea.textContent = data.content;
+    $newBackground.className = 'new-background';
+    $mainForm.classList.add('rendered-form');
+    $pasteTitle.className = 'render-title';
+    
+    if (data.title && data.title.trim() !== '') {
+        $pasteTitle.textContent = data.title;
+    } else {
+        $pasteTitle.textContent = 'Sin título';
+        $pasteTitle.classList.add('no-title');
+    }
+    
+    $pasteContent.className = 'paste-content';
+    $pasteContent.textContent = data.content;
     $copyButton.classList.add('button', 'render-button');
     $copyButton.textContent = 'Copiar texto';
 
-    $copyButton.addEventListener("click", (event) => {
-        event.preventDefault();
-        navigator.clipboard.writeText(data.content);
-    });
     
-    if (data.title && data.title.trim() !== "") {
-        $pasteTitle.className = "render-title";
-        $pasteTitle.textContent = data.title;
-    } else {
-        $pasteTitle.className = "render-title";
-        $pasteTitle.textContent = "Sin título";
-        $pasteTitle.style.fontStyle = "italic";
+    $heroSection.parentNode.insertBefore($newBackground, $heroSection);
+
+    if ($mainForm) {
+        $mainForm.appendChild($pasteContent);
+
+        if ($sendButton && $sendButton.parentNode) {
+            $sendButton.parentNode.replaceChild($copyButton, $sendButton);
+        } else {
+            $mainForm.appendChild($copyButton);
+        }
+
+        $mainForm.insertBefore($pasteTitle, $copyButton);
     }
 
 
-    $heroSection.parentNode.insertBefore($newBackground, $heroSection);
-    $mainForm.appendChild($newTextarea);
-    $sendButton.parentNode.replaceChild($copyButton, $sendButton);
-    $mainForm.insertBefore($pasteTitle, $copyButton);
+    return {
+        $newBackground,
+        $pasteTitle,
+        $pasteContent,
+        $copyButton,
+    }
 }
