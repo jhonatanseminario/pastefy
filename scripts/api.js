@@ -1,7 +1,6 @@
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.0.0/+esm";
 import { isSmallScreen, generateSlug } from "./utils.js";
 import { renderPasteView } from './ui.js';
-const $notification = document.querySelector(".notification");
 
 
 const SUPABASE_URL = 'https://fbogwkdfwzdxdriwecbi.supabase.co';
@@ -10,8 +9,8 @@ const SUPABASE_KEY =
 const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 
-export const sendPaste = async (pasteTitle, pasteText) => {
-    if (!pasteText || pasteText.trim() === '') {
+export const sendPaste = async (pasteTitle, pasteContent) => {
+    if (!pasteContent || pasteContent.trim() === '') {
         console.warn('Función "sendPaste" llamada sin contenido de texto válido.');
         return {
             data: null,
@@ -26,8 +25,8 @@ export const sendPaste = async (pasteTitle, pasteText) => {
         const { data, error } = await supabaseClient
             .from('pastes')
             .insert([{
-                content: pasteText,
                 title: pasteTitle,
+                content: pasteContent,
                 slug: slug
             }])
             .select();
@@ -38,7 +37,7 @@ export const sendPaste = async (pasteTitle, pasteText) => {
                 data: null,
                 error: error,
                 slug: slug
-            };
+            }
         }
 
         console.log(`API: Paste creado con slug: ${slug}`);
@@ -46,7 +45,7 @@ export const sendPaste = async (pasteTitle, pasteText) => {
             data: data,
             error: null,
             slug: slug
-        };
+        }
     }
     catch (error) {
         console.error(`API Error inesperado en sendPaste: ${error}`);
@@ -60,6 +59,8 @@ export const sendPaste = async (pasteTitle, pasteText) => {
 
 
 export async function fetchPaste(slug, domRefs) {
+    const { $notification } = domRefs;
+
     try {
         const { data, error } = await supabaseClient
             .from("pastes")
