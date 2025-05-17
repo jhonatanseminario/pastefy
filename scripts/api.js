@@ -1,49 +1,59 @@
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.0.0/+esm";
 import { isSmallScreen, generateSlug } from "./utils.js";
 import { renderPasteView } from './ui.js';
+const $notification = document.querySelector(".notification");
 
-export function getClient() {
-    const supabaseUrl = "https://fbogwkdfwzdxdriwecbi.supabase.co";
-    const supabaseKey =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZib2d3a2Rmd3pkeGRyaXdlY2JpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY0MjkzNTQsImV4cCI6MjA1MjAwNTM1NH0.XTfmP4M5eoVkWqhGgwlU7g_9kmlzj7WgrULLgkqkCEA";
-    const client = createClient(supabaseUrl, supabaseKey);
 
-    return client;
-}
+const SUPABASE_URL = 'https://fbogwkdfwzdxdriwecbi.supabase.co';
+const SUPABASE_KEY =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZib2d3a2Rmd3pkeGRyaXdlY2JpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY0MjkzNTQsImV4cCI6MjA1MjAwNTM1NH0.XTfmP4M5eoVkWqhGgwlU7g_9kmlzj7WgrULLgkqkCEA';
+const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-export async function sendPaste(pasteTitle, pasteText) {
-    if (!pasteText) {
-        return;
+
+export const sendPaste = async (pasteTitle, pasteText) => {
+    if (!pasteText || pasteText.trim() === '') {
+        return {
+            data: null,
+            error: { message: 'El contenido del paste no puede estar vacío.' },
+            slug: null
+        }
     }
 
-    const pasteId = generateSlug();
+    const slug = generateSlug();
 
     try {
-        const { error } = await getClient()
+        const { error } = await supabaseClient
             .from("pastes")
             .insert([{
                 content: pasteText,
                 title: pasteTitle,
-                slug: pasteId
+                slug: slug
             }]);
 
         if (error) {
-            console.error("Error al enviar el texto:", error);
-            return;
+            return {
+                data: null,
+                error: error,
+                slug: slug
+            };
         }
 
         sessionStorage.setItem("copiedToClipboard", "true");
-        await navigator.clipboard.writeText(`${window.location.origin}/${pasteId}`);
-        window.location.href = `/${pasteId}`;
+        await navigator.clipboard.writeText(`${window.location.origin}/${slug}`);
+        window.location.href = `/${slug}`;
 
     } catch (error) {
-        console.error("Error inesperado:", error);
+        return {
+            data: null, 
+            error: { message: "Error inesperado al comunicarse con la API." },
+            slug: null
+        };
     }
 }
 
 export async function fetchPaste(slug, domRefs) {
     try {
-        const { data, error } = await getClient()
+        const { data, error } = await supabaseClient
             .from("pastes")
             .select("*")
             .eq("slug", slug)

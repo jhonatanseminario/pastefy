@@ -13,6 +13,7 @@ export const $ = selector => {
     }
 };
 
+
 export const $$ = selector => {
     if (typeof selector !== 'string' || selector.trim() === '') {
         console.error('$$: Se requiere un selector de string no vacío.');
@@ -32,6 +33,7 @@ export const isSmallScreen = () => {
     const breakpoint = 768;
     return window.matchMedia(`(max-width: ${breakpoint}px)`).matches;
 };
+
 
 export const generateSlug = () =>{
     const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
