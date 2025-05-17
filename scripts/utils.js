@@ -7,8 +7,8 @@ export const $ = selector => {
     try {
         return document.querySelector(selector);
     }
-    catch (e) {
-        console.error(`$: Selector inválido '${selector}'.`, e);
+    catch (error) {
+        console.error(`$: Selector inválido '${selector}'.`, error);
         return null;
     }
 };
@@ -23,8 +23,8 @@ export const $$ = selector => {
     try {
         return Array.from(document.querySelectorAll(selector));
     }
-    catch (e) {
-        console.error(`$$: Selector inválido '${selector}'.`, e);
+    catch (error) {
+        console.error(`$$: Selector inválido '${selector}'.`, error);
         return [];
     }
 };
