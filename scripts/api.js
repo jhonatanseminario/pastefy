@@ -12,6 +12,7 @@ const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 export const sendPaste = async (pasteTitle, pasteText) => {
     if (!pasteText || pasteText.trim() === '') {
+        console.warn('Función "sendPaste" llamada sin contenido de texto válido.');
         return {
             data: null,
             error: { message: 'El contenido del paste no puede estar vacío.' },
@@ -22,15 +23,17 @@ export const sendPaste = async (pasteTitle, pasteText) => {
     const slug = generateSlug();
 
     try {
-        const { error } = await supabaseClient
-            .from("pastes")
+        const { data, error } = await supabaseClient
+            .from('pastes')
             .insert([{
                 content: pasteText,
                 title: pasteTitle,
                 slug: slug
-            }]);
+            }])
+            .select();
 
         if (error) {
+            console.error(`API Error al enviar el texto: ${error}`);
             return {
                 data: null,
                 error: error,
@@ -38,18 +41,23 @@ export const sendPaste = async (pasteTitle, pasteText) => {
             };
         }
 
-        sessionStorage.setItem("copiedToClipboard", "true");
-        await navigator.clipboard.writeText(`${window.location.origin}/${slug}`);
-        window.location.href = `/${slug}`;
-
-    } catch (error) {
+        console.log(`API: Paste creado con slug: ${slug}`);
         return {
-            data: null, 
-            error: { message: "Error inesperado al comunicarse con la API." },
-            slug: null
+            data: data,
+            error: null,
+            slug: slug
         };
     }
+    catch (error) {
+        console.error(`API Error inesperado en sendPaste: ${error}`);
+        return {
+            data: null, 
+            error: { message: 'Error inesperado al comunicarse con la API.' },
+            slug: null
+        }
+    }
 }
+
 
 export async function fetchPaste(slug, domRefs) {
     try {
