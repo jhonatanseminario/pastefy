@@ -76,3 +76,32 @@ window.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// const $notification = document.querySelector(".notification");
+// if (data && Object.keys(data).length > 0) {
+//     const newElements = renderPasteView(data, domRefs);
+
+//     if (newElements && newElements.$copyButton) {
+//         newElements.$copyButton.addEventListener("click", async (event) => {
+//             event.preventDefault();
+//             await navigator.clipboard.writeText(data.content);
+//         });
+//     }
+
+//     document.body.classList.remove("hidden");
+
+//     if (sessionStorage.getItem("copiedToClipboard") === "true" && !isSmallScreen()) {
+//         setTimeout(() => {
+//             $notification.classList.remove("hidden-notification");
+//         }, 400);
+    
+//         setTimeout(() => {
+//             $notification.classList.add("hidden-notification");
+//         }, 4400);
+
+//         sessionStorage.removeItem("copiedToClipboard");
+//     }
+
+// } else {
+//     window.location.href = "/";
+// }

@@ -1,6 +1,5 @@
-import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.0.0/+esm";
-import { isSmallScreen, generateSlug } from "./utils.js";
-import { renderPasteView } from './ui.js';
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.0.0/+esm';
+import { generateSlug } from './utils.js';
 
 
 const SUPABASE_URL = 'https://fbogwkdfwzdxdriwecbi.supabase.co';
@@ -81,7 +80,7 @@ export const getPaste = async (slug) => {
                 data: null,
                 error: error,
                 slug: null
-            };
+            }
         }
 
         console.log(`API: Paste encontrado con slug: ${slug}`);
@@ -95,37 +94,8 @@ export const getPaste = async (slug) => {
         console.error(`API Error inesperado en función "getPaste": ${error}`);
         return {
             data: null,
-            error: { message: "Error inesperado al comunicarse con la API." },
+            error: { message: 'Error inesperado al comunicarse con la API.' },
             slug: null
-        };
+        }
     }
 }
-
-// const $notification = document.querySelector(".notification");
-// if (data && Object.keys(data).length > 0) {
-//     const newElements = renderPasteView(data, domRefs);
-
-//     if (newElements && newElements.$copyButton) {
-//         newElements.$copyButton.addEventListener("click", async (event) => {
-//             event.preventDefault();
-//             await navigator.clipboard.writeText(data.content);
-//         });
-//     }
-
-//     document.body.classList.remove("hidden");
-
-//     if (sessionStorage.getItem("copiedToClipboard") === "true" && !isSmallScreen()) {
-//         setTimeout(() => {
-//             $notification.classList.remove("hidden-notification");
-//         }, 400);
-    
-//         setTimeout(() => {
-//             $notification.classList.add("hidden-notification");
-//         }, 4400);
-
-//         sessionStorage.removeItem("copiedToClipboard");
-//     }
-
-// } else {
-//     window.location.href = "/";
-// }
