@@ -25,9 +25,9 @@ export const $$ = selector => {
     }
 }
 
-export const isSmallScreen = () => {
+export const isDesktop = () => {
     const breakpoint = 768;
-    return window.matchMedia(`(max-width: ${breakpoint}px)`).matches;
+    return window.matchMedia(`(min-width: ${breakpoint}px)`).matches;
 }
 
 
