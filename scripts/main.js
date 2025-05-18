@@ -1,5 +1,6 @@
-import { $, $$ } from './utils.js';
 import { getPaste, sendPaste } from './api.js';
+import { renderPasteView, showNotification } from './ui.js';
+import { $, $$, isDesktop } from './utils.js';
 
 const slug = window.location.pathname.slice(1);
 
@@ -29,8 +30,29 @@ window.addEventListener('DOMContentLoaded', async () => {
     }
 
     if (slug) {
-        getPaste(slug, domRefs);
-    } else {
+        const response = await getPaste(slug);
+        const data = await response.data;
+
+        if (data) {
+            const newDomRefs = renderPasteView(data, domRefs);
+            const { $copyButton } = newDomRefs;
+
+            $copyButton.addEventListener('click', (event) => {
+                event.preventDefault();
+                navigator.clipboard.writeText(data.content);
+            });
+            
+            if (sessionStorage.getItem('firstPasteView') && isDesktop()) {
+                showNotification(domRefs);
+            }
+
+            document.body.classList.remove('hidden');
+        }
+        else {
+            window.location.href = '/';
+        }
+    }
+    else {
         document.body.classList.remove("hidden");
         $sendButton.disabled = true;
 
@@ -58,7 +80,7 @@ window.addEventListener('DOMContentLoaded', async () => {
                 }
 
                 if (info.slug) {
-                    sessionStorage.setItem("copiedToClipboard", "true");
+                    sessionStorage.setItem("firstPasteView", "true");
                     await navigator.clipboard.writeText(`${window.location.origin}/${info.slug}`);
                     window.location.href = `/${info.slug}`;
                 } else {
@@ -76,32 +98,3 @@ window.addEventListener('DOMContentLoaded', async () => {
         });
     }
 });
-
-// const $notification = document.querySelector(".notification");
-// if (data && Object.keys(data).length > 0) {
-//     const newElements = renderPasteView(data, domRefs);
-
-//     if (newElements && newElements.$copyButton) {
-//         newElements.$copyButton.addEventListener("click", async (event) => {
-//             event.preventDefault();
-//             await navigator.clipboard.writeText(data.content);
-//         });
-//     }
-
-//     document.body.classList.remove("hidden");
-
-//     if (sessionStorage.getItem("copiedToClipboard") === "true" && !isSmallScreen()) {
-//         setTimeout(() => {
-//             $notification.classList.remove("hidden-notification");
-//         }, 400);
-    
-//         setTimeout(() => {
-//             $notification.classList.add("hidden-notification");
-//         }, 4400);
-
-//         sessionStorage.removeItem("copiedToClipboard");
-//     }
-
-// } else {
-//     window.location.href = "/";
-// }
