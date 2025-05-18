@@ -65,26 +65,23 @@ export const getPaste = async (slug, domRefs) => {
         console.warn('Función "getPaste" llamada sin slug válido.');
         return {
             data: null,
-            error: { message: 'Slug inválido o vacío.' },
-            slug: null
+            error: { message: 'Slug inválido o vacío.' }
         };
     }
 
     try {
         const { data, error } = await supabaseClient
-            .from("pastes")
-            .select("*")
-            .eq("slug", slug)
+            .from('pastes')
+            .select('*')
+            .eq('slug', slug)
             .single();
 
         if (error) {
-            console.error("Error al recuperar el texto:", error);
-
-            if (error.code === 'PGRST116') {
-                window.location.href = "/";
-            }
-
-            return;
+            console.error(`Error al recuperar el texto: ${error}`);
+            return {
+                data: null,
+                error: error
+            };
         }
 
         if (data && Object.keys(data).length > 0) {
