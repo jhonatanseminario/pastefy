@@ -1,4 +1,4 @@
-import { sendPaste, fetchPaste } from './api.js';
+import { sendPaste, getPaste } from './api.js';
 import { $, $$ } from './utils.js';
 
 const slug = window.location.pathname.slice(1);
@@ -29,7 +29,7 @@ window.addEventListener('DOMContentLoaded', () => {
     };
 
     if (slug) {
-        fetchPaste(slug, domRefs);
+        getPaste(slug, domRefs);
     } else {
         document.body.classList.remove("hidden");
         $sendButton.disabled = true;

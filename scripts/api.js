@@ -48,7 +48,7 @@ export const sendPaste = async (pasteTitle, pasteContent) => {
         }
     }
     catch (error) {
-        console.error(`API Error inesperado en sendPaste: ${error}`);
+        console.error(`API Error inesperado en función "sendPaste": ${error}`);
         return {
             data: null, 
             error: { message: 'Error inesperado al comunicarse con la API.' },
@@ -58,8 +58,17 @@ export const sendPaste = async (pasteTitle, pasteContent) => {
 }
 
 
-export async function fetchPaste(slug, domRefs) {
+export const getPaste = async (slug, domRefs) => {
     const { $notification } = domRefs;
+
+    if (!slug || slug.trim() === '') {
+        console.warn('Función "getPaste" llamada sin slug válido.');
+        return {
+            data: null,
+            error: { message: 'Slug inválido o vacío.' },
+            slug: null
+        };
+    }
 
     try {
         const { data, error } = await supabaseClient
@@ -105,8 +114,13 @@ export async function fetchPaste(slug, domRefs) {
         } else {
             window.location.href = "/";
         }
-    } catch (error) {
-        console.error("Error inesperado:", error);
-        window.location.href = "/";
+    }
+    catch (error) {
+        console.error(`API Error inesperado en función "getPaste": ${error}`);
+        return {
+            data: null,
+            error: { message: "Error inesperado al comunicarse con la API." },
+            slug: null
+        };
     }
 }
