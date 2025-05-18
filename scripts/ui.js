@@ -65,3 +65,18 @@ export const renderPasteView = (data, domRefs) => {
         $copyButton,
     }
 }
+
+export const showNotification = (domRefs) => {
+    const { $notification } = domRefs;
+
+    setTimeout(() => {
+        $notification.classList.remove('hidden-notification');
+
+        setTimeout(() => {
+            $notification.classList.add('hidden-notification');
+        }, 4000);
+
+    }, 400);
+    
+    sessionStorage.removeItem('firstPasteView');
+}
