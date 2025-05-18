@@ -1,9 +1,9 @@
-import { sendPaste, getPaste } from './api.js';
 import { $, $$ } from './utils.js';
+import { getPaste, sendPaste } from './api.js';
 
 const slug = window.location.pathname.slice(1);
 
-window.addEventListener('DOMContentLoaded', () => {    
+window.addEventListener('DOMContentLoaded', async () => {    
     const $heroSection = $("#hero");
     const $heroTitle = $(".title");
     const $heroSubtitle = $(".subtitle");
@@ -26,7 +26,7 @@ window.addEventListener('DOMContentLoaded', () => {
         $pasteInput,
         $sendButton,
         $notification
-    };
+    }
 
     if (slug) {
         getPaste(slug, domRefs);

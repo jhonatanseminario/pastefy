@@ -10,7 +10,6 @@ const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 export const sendPaste = async (pasteTitle, pasteContent) => {
     if (!pasteContent || pasteContent.trim() === '') {
-        console.warn('Función "sendPaste" llamada sin contenido de texto válido.');
         return {
             data: null,
             error: { message: 'El contenido del paste no puede estar vacío.' },
@@ -31,7 +30,6 @@ export const sendPaste = async (pasteTitle, pasteContent) => {
             .select();
 
         if (error) {
-            console.error(`API Error al enviar el texto: ${error}`);
             return {
                 data: null,
                 error: error,
@@ -39,7 +37,6 @@ export const sendPaste = async (pasteTitle, pasteContent) => {
             }
         }
 
-        console.log(`API: Paste creado con slug: ${slug}`);
         return {
             data: data,
             error: null,
@@ -47,7 +44,6 @@ export const sendPaste = async (pasteTitle, pasteContent) => {
         }
     }
     catch (error) {
-        console.error(`API Error inesperado en función "sendPaste": ${error}`);
         return {
             data: null, 
             error: { message: 'Error inesperado al comunicarse con la API.' },
@@ -59,7 +55,6 @@ export const sendPaste = async (pasteTitle, pasteContent) => {
 
 export const getPaste = async (slug) => {
     if (!slug || slug.trim() === '') {
-        console.warn('Función "getPaste" llamada sin slug válido.');
         return {
             data: null,
             error: { message: 'Slug inválido o vacío.' },
@@ -75,15 +70,13 @@ export const getPaste = async (slug) => {
             .single();
 
         if (error) {
-            console.error(`Error al recuperar el texto: ${error}`);
             return {
                 data: null,
                 error: error,
-                slug: null
+                slug: slug
             }
         }
 
-        console.log(`API: Paste encontrado con slug: ${slug}`);
         return {
             data: data,
             error: null,
@@ -91,7 +84,6 @@ export const getPaste = async (slug) => {
         }
     }
     catch (error) {
-        console.error(`API Error inesperado en función "getPaste": ${error}`);
         return {
             data: null,
             error: { message: 'Error inesperado al comunicarse con la API.' },
