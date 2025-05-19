@@ -53,48 +53,31 @@ window.addEventListener('DOMContentLoaded', async () => {
         document.body.classList.remove('hidden');
     }
     else {
-        document.body.classList.remove("hidden");
-        $sendButton.disabled = true;
-
-        $pasteInput.addEventListener("input", () => {
-            $pasteInput.value.trim() === ""
-                ? $sendButton.disabled = true
-                : $sendButton.disabled = false;
+        $pasteInput.addEventListener('input', () => {
+            const hasContent = $pasteInput.value.trim() !== '';
+            $sendButton.disabled = !hasContent;
         });
 
+        $sendButton.addEventListener('click', async () => {
+            $sendButton.disabled = true;
 
-        $sendButton.addEventListener("click", async () => {
             const pasteTitle = $titleInput.value;
             const pasteText = $pasteInput.value;
 
-            $sendButton.disabled = true;
+            const data = await sendPaste(pasteTitle, pasteText);
 
-            try {
-
-                let info = await sendPaste(pasteTitle, pasteText);
-                if (info.error) {
-                    console.error("Error reportado por sendPaste:", info.error);
-                    alert("Error: " + (info.error.message || "No se pudo guardar el paste."));
-                    $sendButton.disabled = false;
-                    return;
-                }
-
-                if (info.slug) {
-                    sessionStorage.setItem("firstPasteView", "true");
-                    await navigator.clipboard.writeText(`${window.location.origin}/${info.slug}`);
-                    window.location.href = `/${info.slug}`;
-                } else {
-                    console.error("Error inesperado: sendPaste retornó sin error pero sin slug.", info);
-                    alert("Error inesperado al obtener la dirección del paste.");
-                    $sendButton.disabled = false;
-                }
-
-
-            } catch (error) {
-                console.error("Error inesperado al procesar el paste:", error);
-                alert("Ocurrió un error inesperado.");
+            if (data.error) {
                 $sendButton.disabled = false;
+                return;
+            }
+
+            if (data.slug) {
+                sessionStorage.setItem('firstPasteView', 'true');
+                navigator.clipboard.writeText(`${window.location.origin}/${data.slug}`);
+                window.location.href = `/${data.slug}`;
             }
         });
+
+        document.body.classList.remove('hidden');
     }
 });
