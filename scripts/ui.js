@@ -1,3 +1,6 @@
+const NOTIFICATION_DELAY = 400;
+const NOTIFICATION_DURATION = 4000;
+
 export const renderPasteView = (data, domRefs) => {
     const {
         $heroSection,
@@ -10,15 +13,16 @@ export const renderPasteView = (data, domRefs) => {
         $sendButton,
     } = domRefs;
 
-
     if ($heroTitle?.remove) $heroTitle.remove();
     if ($heroSubtitle?.remove) $heroSubtitle.remove();
     if ($titleInput?.remove) $titleInput.remove();
     if ($pasteInput?.remove) $pasteInput.remove();
 
-    if ($$formLabels) $$formLabels.forEach( $formLabel => {
-        if ($formLabel?.remove) $formLabel.remove();
-    });
+    if ($$formLabels) {
+        $$formLabels.forEach( $formLabel => {
+            if ($formLabel?.remove) $formLabel.remove();
+        });
+    }
 
 
     const $newBackground = document.createElement('div');
@@ -40,10 +44,14 @@ export const renderPasteView = (data, domRefs) => {
     
     $pasteContent.className = 'paste-content';
     $pasteContent.textContent = data.content;
+
     $copyButton.classList.add('button', 'render-button');
     $copyButton.textContent = 'Copiar texto';
 
-    if ($heroSection && $heroSection.parentNode) $heroSection.parentNode.insertBefore($newBackground, $heroSection);
+
+    if ($heroSection && $heroSection.parentNode) {
+        $heroSection.parentNode.insertBefore($newBackground, $heroSection);
+    }
 
     if ($mainForm) {
         $mainForm.appendChild($pasteContent);
@@ -57,7 +65,6 @@ export const renderPasteView = (data, domRefs) => {
         $mainForm.insertBefore($pasteTitle, $copyButton);
     }
 
-
     return {
         $newBackground,
         $pasteTitle,
@@ -66,17 +73,23 @@ export const renderPasteView = (data, domRefs) => {
     }
 }
 
-export const showNotification = (domRefs) => {
+export const showNotification = (domRefs, message) => {
     const { $notification } = domRefs;
+
+    if (!$notification) {
+        return;
+    }
+
+    $notification.textContent = message;
 
     setTimeout(() => {
         $notification.classList.remove('hidden-notification');
+        $notification.setAttribute('aria-hidden', 'false');
 
         setTimeout(() => {
             $notification.classList.add('hidden-notification');
-        }, 4000);
-
-    }, 400);
+            $notification.setAttribute('aria-hidden', 'true');
+        }, NOTIFICATION_DURATION);
     
-    sessionStorage.removeItem('firstPasteView');
+    }, NOTIFICATION_DELAY);
 }

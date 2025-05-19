@@ -47,7 +47,8 @@ window.addEventListener('DOMContentLoaded', async () => {
         });
         
         if (sessionStorage.getItem('firstPasteView') && isDesktop()) {
-            showNotification(domRefs);
+            showNotification(domRefs, 'El enlace ha sido copiado al portapapeles');
+            sessionStorage.removeItem('firstPasteView');
         }
 
         document.body.classList.remove('hidden');
