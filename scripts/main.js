@@ -33,24 +33,24 @@ window.addEventListener('DOMContentLoaded', async () => {
         const response = await getPaste(slug);
         const data = await response.data;
 
-        if (data) {
-            const newDomRefs = renderPasteView(data, domRefs);
-            const { $copyButton } = newDomRefs;
-
-            $copyButton.addEventListener('click', (event) => {
-                event.preventDefault();
-                navigator.clipboard.writeText(data.content);
-            });
-            
-            if (sessionStorage.getItem('firstPasteView') && isDesktop()) {
-                showNotification(domRefs);
-            }
-
-            document.body.classList.remove('hidden');
-        }
-        else {
+        if (!data) {
             window.location.href = '/';
+            return;
         }
+        
+        const newDomRefs = renderPasteView(data, domRefs);
+        const { $copyButton } = newDomRefs;
+
+        $copyButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            navigator.clipboard.writeText(data.content);
+        });
+        
+        if (sessionStorage.getItem('firstPasteView') && isDesktop()) {
+            showNotification(domRefs);
+        }
+
+        document.body.classList.remove('hidden');
     }
     else {
         document.body.classList.remove("hidden");
