@@ -8,8 +8,8 @@ const SUPABASE_KEY =
 const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 
-export const sendPaste = async (pasteTitle, pasteContent) => {
-    if (!pasteContent || pasteContent.trim() === '') {
+export const sendPaste = async (title, content) => { 
+    if (!content || content.trim() === '') {
         return {
             data: null,
             error: { message: 'El contenido del paste no puede estar vacío.' },
@@ -23,8 +23,8 @@ export const sendPaste = async (pasteTitle, pasteContent) => {
         const { data, error } = await supabaseClient
             .from('pastes')
             .insert([{
-                title: pasteTitle,
-                content: pasteContent,
+                title: title,
+                content: content,
                 slug: slug
             }])
             .select();
@@ -45,7 +45,7 @@ export const sendPaste = async (pasteTitle, pasteContent) => {
     }
     catch (error) {
         return {
-            data: null, 
+            data: null,
             error: { message: 'Error inesperado al comunicarse con la API.' },
             slug: null
         }
@@ -57,8 +57,7 @@ export const getPaste = async (slug) => {
     if (!slug || slug.trim() === '') {
         return {
             data: null,
-            error: { message: 'Slug inválido o vacío.' },
-            slug: null
+            error: { message: 'Slug inválido o vacío.' }
         }
     }
 
@@ -72,22 +71,26 @@ export const getPaste = async (slug) => {
         if (error) {
             return {
                 data: null,
-                error: error,
-                slug: slug
+                error: error
+            }
+        }
+
+        if (!data) {
+            return {
+                data: null,
+                error: { message: 'Paste no encontrado.' }
             }
         }
 
         return {
             data: data,
-            error: null,
-            slug: slug
+            error: null
         }
     }
     catch (error) {
         return {
             data: null,
-            error: { message: 'Error inesperado al comunicarse con la API.' },
-            slug: null
+            error: { message: 'Error inesperado al comunicarse con la API.' }
         }
     }
 }
