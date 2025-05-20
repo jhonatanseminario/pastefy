@@ -4,7 +4,7 @@ import { $, $$, isDesktop } from './utils.js';
 
 const slug = window.location.pathname.slice(1);
 
-window.addEventListener('DOMContentLoaded', async () => {    
+window.addEventListener('DOMContentLoaded', async () => {
     const $heroSection = $("#hero");
     const $heroTitle = $(".title");
     const $heroSubtitle = $(".subtitle");
@@ -30,25 +30,29 @@ window.addEventListener('DOMContentLoaded', async () => {
     }
 
     if (slug) {
-        const response = await getPaste(slug);
-        const data = await response.data;
+        const { data, error } = await getPaste(slug);
 
-        if (!data) {
+        if (error) {
             window.location.href = '/';
             return;
         }
-        
-        const newDomRefs = renderPasteView(data, domRefs);
-        const { $copyButton } = newDomRefs;
 
-        $copyButton.addEventListener('click', (event) => {
-            event.preventDefault();
-            navigator.clipboard.writeText(data.content);
-        });
-        
-        if (sessionStorage.getItem('firstPasteView') && isDesktop()) {
-            showNotification(domRefs, 'El enlace ha sido copiado al portapapeles');
-            sessionStorage.removeItem('firstPasteView');
+        if (data) {
+            const newDomRefs = renderPasteView(data, domRefs);
+            const { $copyButton } = newDomRefs;
+
+            $copyButton.addEventListener('click', async (event) => {
+                event.preventDefault();
+                await navigator.clipboard.writeText(data.content);
+            });
+
+            if (sessionStorage.getItem('firstPasteView') === 'true' && isDesktop()) {
+                showNotification(domRefs, 'El enlace ha sido copiado al portapapeles');
+                sessionStorage.removeItem('firstPasteView');
+            }
+        }
+        else {
+            window.location.href = '/';
         }
 
         document.body.classList.remove('hidden');
@@ -65,17 +69,25 @@ window.addEventListener('DOMContentLoaded', async () => {
             const pasteTitle = $titleInput.value;
             const pasteText = $pasteInput.value;
 
-            const data = await sendPaste(pasteTitle, pasteText);
-
-            if (data.error) {
+            if (!pasteText || pasteText.trim() === '') {
                 $sendButton.disabled = false;
                 return;
             }
 
-            if (data.slug) {
+            const { data, error, slug: newSlug } = await sendPaste(pasteTitle, pasteText);
+
+            if (error) {
+                $sendButton.disabled = false;
+                return;
+            }
+
+            if (data) {
                 sessionStorage.setItem('firstPasteView', 'true');
-                navigator.clipboard.writeText(`${window.location.origin}/${data.slug}`);
-                window.location.href = `/${data.slug}`;
+                await navigator.clipboard.writeText(`${window.location.origin}/${newSlug}`);
+                window.location.href = `/${newSlug}`;
+            }
+            else {
+                 $sendButton.disabled = false;
             }
         });
 
