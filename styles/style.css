@@ -4,6 +4,42 @@
     box-sizing: border-box;
 }
 
+@font-face {
+    font-family: 'Roboto';
+    src: url('../assets/fonts/Roboto-Regular.woff2') format('woff2'),
+         url('../assets/fonts/Roboto-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../assets/fonts/Roboto-Medium.woff2') format('woff2'),
+         url('../assets/fonts/Roboto-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../assets/fonts/Roboto-Black.woff2') format('woff2'),
+         url('../assets/fonts/Roboto-Black.woff') format('woff');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Roboto Mono';
+    src: url('../assets/fonts/RobotoMono-Regular.woff2') format('woff2'),
+         url('../assets/fonts/RobotoMono-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
 body {
     font-family: "Roboto", "Helvetica", "Arial", "Segoe UI", "Verdana", sans-serif;
 }
@@ -234,4 +270,110 @@ main .background {
 ::selection {
     background-color: #4b69ff;
     color: #ffffff;
+}
+
+.render-title {
+    color: rgba(35, 50, 65, 0.9);
+    font-size: 28px;
+    font-weight: 600;
+    margin: 16px 0 24px 8px;
+    letter-spacing: -1px;
+    text-align: left;
+
+
+    @media only screen and (800px > width) {
+        font-size: 20px;
+    }
+}
+
+.background,
+.new-background {
+    background: linear-gradient(
+        -45deg,
+        hsl(229 100% 60% / 40%),
+        hsl(231 80% 65% / 40%) 40%,
+        hsl(217 70% 55% / 40%) 45%,
+        hsl(229 100% 60% / 40%) 60%,
+        hsl(214 60% 50% / 40%)
+    );
+    border-radius: 50%;
+    filter: blur(144px);
+    height: 33%;
+    position: absolute;
+    top: -32px;
+    width: 50%;
+}
+
+.new-background {
+    left: 0;
+}
+
+.rendered-form {
+    margin: 96px auto 96px auto;
+    width: 900px;
+
+    @media only screen and (1000px > width > 799px) {
+        width: 720px;
+    }
+
+    @media only screen and (800px > width > 600px) {
+        box-shadow: -3px 5px 12px rgba(75, 105, 255, 0.2),
+            -3px 2px 6px rgba(0, 0, 0, 0.08);
+        margin: 64px auto 64px auto;
+        padding: 22px 24px;
+        width: 480px;
+    }
+
+    @media only screen and (600px > width) {
+        box-shadow: -3px 5px 12px rgba(75, 105, 255, 0.2),
+            -3px 2px 6px rgba(0, 0, 0, 0.08);
+        margin: 64px auto 64px auto;
+        padding: 22px 24px;
+        width: 360px;
+    }
+}
+
+.render-button {
+    font-size: 14px;
+    margin: 0 0 24px 6px;
+    padding: 12px 16px;
+    width: 120px;
+
+    &:focus {
+        outline-offset: 3px;
+    }
+
+    @media only screen and (800px > width) {
+        font-size: 11px;
+        margin: 0 0 18px 6px;
+        padding: 10px 12px;
+        width: 100px;
+    }
+}
+
+.paste-content {
+    background-color: #ffffff;
+    border-radius: 8px;
+    border: 3px solid #e5e5e5;
+    color: #233241;
+    font-family: "Roboto Mono", "Courier New", Consolas, "Source Code Pro", Menlo, monospace;
+    font-size: 14px;
+    height: fit-content;
+    margin: 16px auto;
+    min-height: 240px;
+    padding: 28px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+
+    @media only screen and (800px > width) {
+        border: 2px solid #e5e5e5;
+        font-size: 10px;
+        margin: 8px auto;
+        min-height: 240px;
+        padding: 16px;
+    }
+}
+
+.no-title {
+    font-style: italic;
 }
