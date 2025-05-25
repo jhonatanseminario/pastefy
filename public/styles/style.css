@@ -40,12 +40,26 @@
     font-display: swap;
 }
 
+:root {
+    --gradient-hero-background: linear-gradient(
+        -45deg,
+        hsl(229 100% 60% / 80%),
+        hsl(231 80% 65% / 80%) 40%,
+        hsl(217 70% 55% / 80%) 45%,
+        hsl(229 100% 60% / 80%) 60%,
+        hsl(214 60% 50% / 80%)
+    );
+}
+
 body {
     font-family: "Roboto", "Helvetica", "Arial", "Segoe UI", "Verdana", sans-serif;
 }
 
-.hidden {
-    display: none;
+main .background {
+    background: var(--gradient-hero-background);
+    filter: blur(96px);
+    height: 128px;
+    width: 100%;
 }
 
 .title {
@@ -78,23 +92,6 @@ body {
         font-size: 18px;
         padding: 0 32px 16px 32px;
     }
-}
-
-main .background {
-    background: linear-gradient(
-        -45deg,
-        hsl(229 100% 60% / 80%),
-        hsl(231 80% 65% / 80%) 40%,
-        hsl(217 70% 55% / 80%) 45%,
-        hsl(229 100% 60% / 80%) 60%,
-        hsl(214 60% 50% / 80%)
-    );
-    border-radius: 50%;
-    filter: blur(96px);
-    height: 128px;
-    position: absolute;
-    top: -32px;
-    width: 100%;
 }
 
 .form {

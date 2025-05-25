@@ -55,7 +55,7 @@ window.addEventListener('DOMContentLoaded', async () => {
             window.location.href = '/';
         }
 
-        document.body.classList.remove('hidden');
+        if (document.body.hasAttribute('hidden')) document.body.removeAttribute('hidden');
     }
     else {
         $pasteInput.addEventListener('input', () => {
@@ -91,6 +91,6 @@ window.addEventListener('DOMContentLoaded', async () => {
             }
         });
 
-        document.body.classList.remove('hidden');
+        if (document.body.hasAttribute('hidden')) document.body.removeAttribute('hidden');
     }
 });
