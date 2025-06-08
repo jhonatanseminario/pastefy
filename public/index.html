@@ -5,21 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pastefy - Comparte texto fácilmente</title>
 
-    <link rel="stylesheet" href="./css/style.css">
-    <script type="module" src="./js/main.js" defer></script>
-
-    <link rel="icon" href="./assets/icons/favicon.svg" type="image/svg+xml">
-    <link rel="icon" href="./assets/icons/favicon-16x16.png" sizes="16x16" type="image/png">
-    <link rel="icon" href="./assets/icons/favicon-32x32.png" sizes="32x32" type="image/png">
-    <link rel="icon" href="./assets/icons/favicon-48x48.png" sizes="48x48" type="image/png">
-    <link rel="apple-touch-icon" href="./assets/icons/apple-touch-icon.png" sizes="180x180">
-    <link rel="icon" href="./assets/icons/android-chrome-192x192.png" sizes="192x192" type="image/png">
-    <link rel="icon" href="./assets/icons/android-chrome-512x512.png" sizes="512x512" type="image/png">
-    <link rel="icon" href="./assets/icons/favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="./assets/icons/favicon.ico" type="image/x-icon">
-
     <meta name="author" content="Jhonatan Seminario">
     <meta name="theme-color" content="#4b69ff">
+
+    <link rel="icon" href="./assets/icons/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="./assets/icons/apple-touch-icon.png" sizes="180x180">
+    <link rel="icon" href="./assets/icons/android-chrome-512x512.png" sizes="512x512" type="image/png">
+    <link rel="icon" href="./assets/icons/android-chrome-192x192.png" sizes="192x192" type="image/png">
+    <link rel="icon" href="./assets/icons/favicon-32x32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="./assets/icons/favicon-16x16.png" sizes="16x16" type="image/png">
+    <link rel="icon" href="./assets/icons/favicon.ico" type="image/x-icon">
+
+    <link rel="stylesheet" href="./css/style.css">
+    <script type="module" src="./js/main.js" defer></script>
 </head>
 <body hidden>
     <main>
@@ -28,31 +26,31 @@
         <section id="hero">
             <h1 class="title">Bienvenido a <span class="accent">Pastefy</span></h1>
             <p class="subtitle">Pegar y compartir nunca fue tan fácil.</p>
+
+            <form class="form" aria-label="Formulario para crear nuevo paste">
+                <label class="label" for="title-input">Título</label>
+                <input
+                    id="title-input"
+                    class="input title-input"
+                    type="text"
+                    placeholder="Escribe un título, si lo prefieres"
+                    maxlength="128"
+                >
+
+                <label class="label" for="paste-input">Contenido</label>
+                <textarea
+                    id="paste-input"
+                    class="input paste-input"
+                    required
+                    placeholder="Introduce tu texto aquí..."
+                    maxlength="100000"
+                ></textarea>
+
+                <button class="button send-button" disabled>Crear</button>
+            </form>
         </section>
 
-        <form class="form" aria-label="Formulario para crear nuevo paste">
-            <label class="label" for="title-input">Título</label>
-            <input
-                id="title-input"
-                class="input title-input"
-                type="text"
-                placeholder="Escribe un título, si lo prefieres"
-                maxlength="128"
-            >
-
-            <label class="label" for="paste-input">Contenido</label>
-            <textarea
-                id="paste-input"
-                class="input paste-input"
-                required
-                placeholder="Introduce tu texto aquí..."
-                maxlength="100000"
-            ></textarea>
-
-            <button class="button send-button" disabled>Crear</button>
-        </form>
-
-        <div class="notification hidden-notification"></div>
+        <div class="notification hidden-notification" role="status"></div>
     </main>
 </body>
 </html>
