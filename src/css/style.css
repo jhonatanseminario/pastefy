@@ -55,7 +55,7 @@ body {
     font-family: "Roboto", "Helvetica", "Arial", "Segoe UI", "Verdana", sans-serif;
 }
 
-main .background {
+.background:has(+ main) {
     background: var(--gradient-hero-background);
     filter: blur(96px);
     height: 128px;
@@ -373,4 +373,8 @@ main .background {
 
 .no-title {
     font-style: italic;
+}
+
+.hidden {
+  display: none;
 }
