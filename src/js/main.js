@@ -1,4 +1,4 @@
-import { fetchPasteBySlug, createPaste } from './api.js';
+import { selectPasteBySlug, insertPaste } from './api.js';
 import { renderPasteView, showNotification } from './ui.js';
 import { $, $$, isDesktop } from './utils.js';
 
@@ -30,7 +30,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     }
 
     if (slug) {
-        const { data, error } = await fetchPasteBySlug(slug);
+        const { data, error } = await selectPasteBySlug(slug);
 
         if (error) {
             window.location.href = '/';
@@ -74,7 +74,7 @@ window.addEventListener('DOMContentLoaded', async () => {
                 return;
             }
 
-            const { data, error, slug: newSlug } = await createPaste(pasteTitle, pasteText);
+            const { data, error, slug: newSlug } = await insertPaste(pasteTitle, pasteText);
 
             if (error) {
                 $sendButton.disabled = false;

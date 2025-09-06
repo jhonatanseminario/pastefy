@@ -7,9 +7,9 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 
-const executeSupabaseQuery = async (supabaseQuery, { slug = null }) => {
+const executeQuery = async (query, { slug = null }) => {
     try {
-        const { data, error } = await supabaseQuery();
+        const { data, error } = await query();
 
         if (error) {
             return {
@@ -29,7 +29,7 @@ const executeSupabaseQuery = async (supabaseQuery, { slug = null }) => {
         return {
             data: null,
             error: {
-                message: 'No se pudo completar la solicitud.',
+                message: 'No se pudo completar la solicitud. Inténtalo de nuevo más tarde.',
                 original: error
             },
             slug
@@ -38,7 +38,7 @@ const executeSupabaseQuery = async (supabaseQuery, { slug = null }) => {
 }
 
 
-export const createPaste = async (title, content) => { 
+export const insertPaste = async (title, content) => { 
     if (!content?.trim()) {
         return {
             data: null,
@@ -49,7 +49,7 @@ export const createPaste = async (title, content) => {
 
     const slug = generateSlug();
 
-    return executeSupabaseQuery(
+    return executeQuery(
         () => supabase
             .from('pastes')
             .insert({
@@ -63,7 +63,7 @@ export const createPaste = async (title, content) => {
 }
 
 
-export const fetchPasteBySlug = async (slug) => {
+export const selectPasteBySlug = async (slug) => {
     if (!slug?.trim()) {
         return {
             data: null,
@@ -72,7 +72,7 @@ export const fetchPasteBySlug = async (slug) => {
         }
     }
 
-    return executeSupabaseQuery(
+    return executeQuery(
         () => supabase
             .from('pastes')
             .select('title, content, slug')
