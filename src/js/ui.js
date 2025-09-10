@@ -1,95 +1,61 @@
 const NOTIFICATION_DELAY = 400;
 const NOTIFICATION_DURATION = 4000;
 
-export const renderPasteView = (data, domRefs) => {
-    const {
-        $heroSection,
-        $heroTitle,
-        $heroSubtitle,
-        $mainForm,
-        $$formLabels,
-        $titleInput,
-        $pasteInput,
-        $sendButton,
-    } = domRefs;
 
-    if ($heroTitle?.remove) $heroTitle.remove();
-    if ($heroSubtitle?.remove) $heroSubtitle.remove();
-    if ($titleInput?.remove) $titleInput.remove();
-    if ($pasteInput?.remove) $pasteInput.remove();
-
-    if ($$formLabels) {
-        $$formLabels.forEach( $formLabel => {
-            if ($formLabel?.remove) $formLabel.remove();
-        });
-    }
+const removeDomElements = (domElements = []) =>
+    domElements.forEach(domElement => domElement?.remove?.())
 
 
-    const $newBackground = document.createElement('div');
+const createDomElements = (data) => {
     const $pasteTitle = document.createElement('h1');
     const $pasteContent = document.createElement('div');
     const $copyButton = document.createElement('button');
 
-
-    $newBackground.className = 'new-background';
-    if ($mainForm) $mainForm.classList.add('rendered-form');
-    $pasteTitle.className = 'render-title';
-    
-    if (data.title && data.title.trim() !== '') {
-        $pasteTitle.textContent = data.title;
-    } else {
-        $pasteTitle.textContent = 'Sin título';
-        $pasteTitle.classList.add('no-title');
-    }
-    
-    $pasteContent.className = 'paste-content';
-    $pasteContent.textContent = data.content;
-
+    $pasteTitle.classList.add('render-title');
+    if (!data.title?.trim()) $pasteTitle.classList.add('no-title');
+    $pasteContent.classList.add('paste-content');
     $copyButton.classList.add('button', 'render-button');
+    
+    $pasteTitle.textContent = data.title?.trim() || 'Sin título';
+    $pasteContent.textContent = data.content;
     $copyButton.textContent = 'Copiar texto';
 
-
-    if ($heroSection && $heroSection.parentNode) {
-        $heroSection.parentNode.insertBefore($newBackground, $heroSection);
-    }
-
-    if ($mainForm) {
-        $mainForm.appendChild($pasteContent);
-
-        if ($sendButton && $sendButton.parentNode) {
-            $sendButton.parentNode.replaceChild($copyButton, $sendButton);
-        } else {
-            $mainForm.appendChild($copyButton);
-        }
-
-        $mainForm.insertBefore($pasteTitle, $copyButton);
-    }
-
-    return {
-        $newBackground,
-        $pasteTitle,
-        $pasteContent,
-        $copyButton,
-    }
+    return { $pasteTitle, $pasteContent, $copyButton }
 }
 
-export const showNotification = (domRefs, message) => {
-    const { $notification } = domRefs;
 
-    if (!$notification) {
-        return;
-    }
+const insertDomElements = (domElements, newDomElements) => {
+    const { $mainForm, $sendButton } = domElements;
+    const { $pasteTitle, $pasteContent, $copyButton } = newDomElements;
 
+    $mainForm.prepend($pasteTitle);
+    $mainForm.append($pasteContent);
+    $sendButton.replaceWith($copyButton);
+
+    $mainForm.classList.add('rendered-form');
+}
+
+
+export const renderData = (data, domElements) => {
+    const { $heroTitle, $heroSubtitle, $$formLabels, $titleInput, $pasteInput } = domElements;
+
+    removeDomElements([$heroTitle, $heroSubtitle, ...($$formLabels || []), $titleInput, $pasteInput]);
+    const newDomElements = createDomElements(data);
+    insertDomElements(domElements, newDomElements);
+
+    return newDomElements;
+}
+
+
+export const showNotification = (domElements, message) => {
+    const { $notification } = domElements;
     $notification.textContent = message;
 
     setTimeout(() => {
         $notification.classList.remove('hidden-notification');
-        $notification.setAttribute('aria-hidden', 'false');
-
-        setTimeout(() => {
-            $notification.classList.add('hidden-notification');
-            $notification.setAttribute('aria-hidden', 'true');
-        }, NOTIFICATION_DURATION);
-    
     }, NOTIFICATION_DELAY);
+
+    setTimeout(() => {
+        $notification.classList.add('hidden-notification');
+    }, NOTIFICATION_DELAY + NOTIFICATION_DURATION);
 }

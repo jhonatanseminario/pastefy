@@ -200,7 +200,7 @@ body {
     cursor: pointer;
     display: block;
     font-size: 18px;
-    font-weight: 900;
+    font-weight: 600;
     margin: 16px auto;
     padding: 16px 32px;
     transition: transform 0.1s ease-in-out, box-shadow 0.1s ease-in-out;
@@ -283,8 +283,7 @@ body {
     }
 }
 
-.background,
-.new-background {
+.background {
     background: linear-gradient(
         -45deg,
         hsl(229 100% 60% / 40%),
@@ -299,10 +298,6 @@ body {
     position: absolute;
     top: -32px;
     width: 50%;
-}
-
-.new-background {
-    left: 0;
 }
 
 .rendered-form {

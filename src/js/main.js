@@ -1,5 +1,5 @@
 import { selectPasteBySlug, insertPaste } from './api.js';
-import { renderPasteView, showNotification } from './ui.js';
+import { renderData, showNotification } from './ui.js';
 import { $, $$, isDesktop } from './utils.js';
 
 const slug = window.location.pathname.slice(1);
@@ -38,7 +38,7 @@ window.addEventListener('DOMContentLoaded', async () => {
         }
 
         if (data) {
-            const newDomRefs = renderPasteView(data, domRefs);
+            const newDomRefs = renderData(data, domRefs);
             const { $copyButton } = newDomRefs;
 
             $copyButton.addEventListener('click', async (event) => {
