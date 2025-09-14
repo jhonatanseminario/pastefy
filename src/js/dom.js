@@ -1,7 +1,7 @@
 import { $, $$ } from './utils.js';
 
 
-export const DOM = {
+export const domElements = {
     $main: $('main'),
     $heroSection: $('#hero'),
     $heroTitle: $('.title'),

@@ -1,21 +1,17 @@
 import { insertPaste, selectPasteBySlug } from './api.js';
-import { DOM } from './dom.js';
-import { renderData, showNotification } from './ui.js';
+import { domElements } from './dom.js';
+import { renderData, showMain, showNotification } from './ui.js';
 import { isDesktop } from './utils.js';
 
 
-const { $main, $heroSection, $heroTitle, $heroSubtitle, $pasteForm, $formLabels, $titleInput, $pasteInput, $sendButton, $notification } = DOM;
-const domElements = { $main, $heroSection, $heroTitle, $heroSubtitle, $pasteForm, $formLabels, $titleInput, $pasteInput, $sendButton, $notification }
-
+const { $titleInput, $pasteInput, $sendButton } = domElements;
 
 const slug = window.location.pathname.slice(1);
 
 if (slug) {
     const { data, error } = await selectPasteBySlug(slug);
 
-    if (error || !data) {
-        window.location.replace('/');
-    }
+    if (error || !data) window.location.replace('/');
 
     const newDomElements = renderData(data, domElements);
     const { $copyButton } = newDomElements;
@@ -55,4 +51,4 @@ else {
     });
 }
 
-$main.classList.remove('hidden');
+showMain(domElements);
