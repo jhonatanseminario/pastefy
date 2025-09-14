@@ -1,96 +1,58 @@
-import { selectPasteBySlug, insertPaste } from './api.js';
+import { insertPaste, selectPasteBySlug } from './api.js';
+import { DOM } from './dom.js';
 import { renderData, showNotification } from './ui.js';
-import { $, $$, isDesktop } from './utils.js';
+import { isDesktop } from './utils.js';
+
+
+const { $main, $heroSection, $heroTitle, $heroSubtitle, $pasteForm, $formLabels, $titleInput, $pasteInput, $sendButton, $notification } = DOM;
+const domElements = { $main, $heroSection, $heroTitle, $heroSubtitle, $pasteForm, $formLabels, $titleInput, $pasteInput, $sendButton, $notification }
+
 
 const slug = window.location.pathname.slice(1);
 
-window.addEventListener('DOMContentLoaded', async () => {
-    const $heroSection = $("#hero");
-    const $heroTitle = $(".title");
-    const $heroSubtitle = $(".subtitle");
-    const $pageBackground = $(".background");
-    const $mainForm = $(".form");
-    const $$formLabels = $$(".label");
-    const $titleInput = $(".title-input");
-    const $pasteInput = $(".paste-input");
-    const $sendButton = $(".send-button");
-    const $notification = $(".notification");
+if (slug) {
+    const { data, error } = await selectPasteBySlug(slug);
 
-    const domRefs = {
-        $heroSection,
-        $heroTitle,
-        $heroSubtitle,
-        $pageBackground,
-        $mainForm,
-        $$formLabels,
-        $titleInput,
-        $pasteInput,
-        $sendButton,
-        $notification
+    if (error || !data) {
+        window.location.replace('/');
     }
 
-    if (slug) {
-        const { data, error } = await selectPasteBySlug(slug);
+    const newDomElements = renderData(data, domElements);
+    const { $copyButton } = newDomElements;
 
-        if (error) {
-            window.location.href = '/';
+    $copyButton.addEventListener('click', async (event) => {
+        event.preventDefault();
+        await navigator.clipboard.writeText(data.content);
+    });
+
+    if (sessionStorage.getItem('firstPasteView') && isDesktop()) {
+        showNotification(domElements, 'El enlace ha sido copiado al portapapeles');
+        sessionStorage.removeItem('firstPasteView');
+    }
+}
+else {
+    $pasteInput.addEventListener('input', () => {
+        const hasContent = $pasteInput.value.trim() !== '';
+        $sendButton.disabled = !hasContent;
+    });
+
+    $sendButton.addEventListener('click', async () => {
+        $sendButton.disabled = true;
+
+        const pasteTitle = $titleInput.value;
+        const pasteContent = $pasteInput.value;
+        
+        const { data, error, slug } = await insertPaste(pasteTitle, pasteContent);
+
+        if (error || !data) {
+            $sendButton.disabled = false;
             return;
         }
 
-        if (data) {
-            const newDomRefs = renderData(data, domRefs);
-            const { $copyButton } = newDomRefs;
+        sessionStorage.setItem('firstPasteView', 'true');
+        await navigator.clipboard.writeText(`${window.location.origin}/${slug}`);
+        window.location.replace(`/${slug}`);
+    });
+}
 
-            $copyButton.addEventListener('click', async (event) => {
-                event.preventDefault();
-                await navigator.clipboard.writeText(data.content);
-            });
-
-            if (sessionStorage.getItem('firstPasteView') === 'true' && isDesktop()) {
-                showNotification(domRefs, 'El enlace ha sido copiado al portapapeles');
-                sessionStorage.removeItem('firstPasteView');
-            }
-        }
-        else {
-            window.location.href = '/';
-        }
-
-        $('main')?.classList.remove('hidden');
-    }
-    else {
-        $pasteInput.addEventListener('input', () => {
-            const hasContent = $pasteInput.value.trim() !== '';
-            $sendButton.disabled = !hasContent;
-        });
-
-        $sendButton.addEventListener('click', async () => {
-            $sendButton.disabled = true;
-
-            const pasteTitle = $titleInput.value;
-            const pasteText = $pasteInput.value;
-
-            if (!pasteText || pasteText.trim() === '') {
-                $sendButton.disabled = false;
-                return;
-            }
-
-            const { data, error, slug: newSlug } = await insertPaste(pasteTitle, pasteText);
-
-            if (error) {
-                $sendButton.disabled = false;
-                return;
-            }
-
-            if (data) {
-                sessionStorage.setItem('firstPasteView', 'true');
-                await navigator.clipboard.writeText(`${window.location.origin}/${newSlug}`);
-                window.location.href = `/${newSlug}`;
-            }
-            else {
-                 $sendButton.disabled = false;
-            }
-        });
-
-        $('main')?.classList.remove('hidden');
-    }
-});
+$main.classList.remove('hidden');

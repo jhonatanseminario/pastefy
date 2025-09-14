@@ -25,21 +25,21 @@ const createDomElements = (data) => {
 
 
 const insertDomElements = (domElements, newDomElements) => {
-    const { $mainForm, $sendButton } = domElements;
+    const { $pasteForm, $sendButton } = domElements;
     const { $pasteTitle, $pasteContent, $copyButton } = newDomElements;
 
-    $mainForm.prepend($pasteTitle);
-    $mainForm.append($pasteContent);
+    $pasteForm.prepend($pasteTitle);
+    $pasteForm.append($pasteContent);
     $sendButton.replaceWith($copyButton);
 
-    $mainForm.classList.add('rendered-form');
+    $pasteForm.classList.add('rendered-form');
 }
 
 
 export const renderData = (data, domElements) => {
-    const { $heroTitle, $heroSubtitle, $$formLabels, $titleInput, $pasteInput } = domElements;
+    const { $heroTitle, $heroSubtitle, $formLabels, $titleInput, $pasteInput } = domElements;
 
-    removeDomElements([$heroTitle, $heroSubtitle, ...($$formLabels || []), $titleInput, $pasteInput]);
+    removeDomElements([$heroTitle, $heroSubtitle, ...($formLabels || []), $titleInput, $pasteInput]);
     const newDomElements = createDomElements(data);
     insertDomElements(domElements, newDomElements);
 
