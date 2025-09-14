@@ -59,3 +59,7 @@ export const showNotification = (domElements, message) => {
         $notification.classList.add('hidden-notification');
     }, NOTIFICATION_DELAY + NOTIFICATION_DURATION);
 }
+
+
+export const showMain = (domElements) =>
+    domElements.$main.classList.remove('hidden');
