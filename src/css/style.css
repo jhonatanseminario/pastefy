@@ -94,7 +94,7 @@ body {
     }
 }
 
-.form {
+.paste-form {
     backdrop-filter: blur(10px);
     background: linear-gradient(
         229deg,
