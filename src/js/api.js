@@ -51,7 +51,7 @@ export const insertPaste = async (title, content) => {
 
     return executeQuery(
         () => supabase
-            .from('pastes')
+            .from('pastefy')
             .insert({
                 title,
                 content,
@@ -74,7 +74,7 @@ export const selectPasteBySlug = async (slug) => {
 
     return executeQuery(
         () => supabase
-            .from('pastes')
+            .from('pastefy')
             .select('title, content, slug')
             .eq('slug', slug)
             .single(),
