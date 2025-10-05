@@ -25,6 +25,8 @@ if (slug) {
         showNotification(domElements, 'El enlace ha sido copiado al portapapeles');
         sessionStorage.removeItem('firstPasteView');
     }
+
+    showMain(domElements);
 }
 else {
     $pasteInput.addEventListener('input', () => {
@@ -49,6 +51,6 @@ else {
         await navigator.clipboard.writeText(`${window.location.origin}/${slug}`);
         window.location.replace(`/${slug}`);
     });
-}
 
-showMain(domElements);
+    showMain(domElements);
+}
