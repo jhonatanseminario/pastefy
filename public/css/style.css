@@ -38,21 +38,15 @@
     font-display: swap;
 }
 
-:root {
-    --gradient-hero-background: linear-gradient(
-        -45deg,
-        hsl(229 100% 60% / 80%),
-        hsl(231 80% 65% / 80%) 40%,
-        hsl(217 70% 55% / 80%) 45%,
-        hsl(229 100% 60% / 80%) 60%,
-        hsl(214 60% 50% / 80%)
-    );
+html {
+  box-sizing: border-box;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+  margin: 0;
 }
 
 body {
@@ -60,7 +54,15 @@ body {
 }
 
 .background:has(+ main) {
-    background: var(--gradient-hero-background);
+    background:
+        linear-gradient(
+            -45deg,
+            hsl(229 100% 60% / 80%),
+            hsl(231 80% 65% / 80%) 40%,
+            hsl(217 70% 55% / 80%) 45%,
+            hsl(229 100% 60% / 80%) 60%,
+            hsl(214 60% 50% / 80%)
+        );
     filter: blur(96px);
     height: 128px;
     width: 100%;
