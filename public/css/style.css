@@ -101,13 +101,9 @@ body {
 }
 
 .label {
-    color: #233241;
-    font-size: 20px;
+    color: oklch(0.25 0.05 250);
+    font-size: clamp(0.875rem, 2vw, 1.125rem);
     font-weight: 500;
-
-    @media only screen and (800px > width) {
-        font-size: 14px;
-    }
 }
 
 .input {
