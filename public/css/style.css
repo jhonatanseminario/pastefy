@@ -88,11 +88,13 @@ body {
 .paste-form {
     background: linear-gradient(
         in oklch to top right,
-        oklch(99% 0 none),
+        oklch(99% 0 250),
         oklch(90% 0.04 250)
     );
     border-radius: 8px;
-    box-shadow: -4px 8px 16px oklch(80% 0.04 250);
+    box-shadow:
+        -2px 4px 8px oklch(75% 0.04 250 / 0.4),
+        -4px 8px 24px oklch(80% 0.04 250 / 0.25);
     margin-block-end: 6rem;
     margin-block-start: 4rem;
     margin-inline: auto;
@@ -118,31 +120,23 @@ body {
     field-sizing: content;
     font-family: 'Roboto Mono', monospace;
     font-size: clamp(0.625rem, 1vw + 0.375rem, 0.875rem);
+    margin-block: 1rem;
     min-height: 360px;
-    margin: 1rem auto;
-    outline-offset: -3px;
-    outline: 2px solid transparent;
-    padding: 1.5rem;
+    outline: 2px solid oklch(55% 0.15 250 / 0);
+    outline-offset: -2px;
+    padding: 1rem;
     resize: none;
-    scrollbar-color: rgba(75, 105, 255, 0.3) transparent;
+    tab-size: 4;
+    transition: outline-color 0.2s ease;
     width: 100%;
 
-    &:focus {
-        outline: 2px solid rgb(75, 105, 255, 0.2);
-        transition: all 0.3s ease;
+    &:focus-visible {
+        outline: 2px solid oklch(55% 0.15 250);
     }
 
-    @media only screen and (800px > width) {
-        border: 2px solid #e5e5e5;
-        margin: 8px auto;
+    @media (width < 800px) {
+        margin-block: 0.5rem;
         min-height: 240px;
-        outline-offset: -2px;
-        outline: 2px solid transparent;
-        padding: 16px;
-
-        &:focus {
-            outline: 2px solid rgb(75, 105, 255, 0.2);
-        }
     }
 }
 
