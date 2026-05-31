@@ -125,7 +125,7 @@ body {
     font-family: 'Roboto Mono', monospace;
     font-size: 0.875rem;
     margin-block-start: 0.5rem;
-    min-height: 360px;
+    min-height: 22.5rem;
     outline: 2px solid oklch(55% 0.15 250 / 0);
     outline-offset: -2px;
     padding: 0.75em 1em;
@@ -139,9 +139,13 @@ body {
     }
 
     @media (width < 800px) {
-        margin-block: 0.5rem;
-        min-height: 240px;
+        margin-block-end: 0.5rem;
+        min-height: 15rem;
     }
+
+    @media (prefers-reduced-motion: reduce) {
+        transition: none;
+    }  
 }
 
 .title-input {
@@ -222,15 +226,6 @@ body {
     position: fixed;
     right: 80px;
     transition: opacity 1.2s ease;
-}
-
-.hidden-notification {
-    opacity: 0;
-}
-
-::selection {
-    background-color: #4b69ff;
-    color: #ffffff;
 }
 
 .render-title {
@@ -315,4 +310,13 @@ body {
 
 .hidden {
   display: none;
+}
+
+.hidden-notification {
+    opacity: 0;
+}
+
+::selection {
+    background-color: #4b69ff;
+    color: #ffffff;
 }
