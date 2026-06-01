@@ -164,7 +164,8 @@ body {
     font-family: inherit;
     font-size: 1rem;
     font-weight: 500;
-    margin: 1rem auto;
+    margin-block: 1rem;
+    margin-inline: auto;
     padding: 1rem 2rem;
     transition:
         background-color 0.2s ease,
@@ -175,7 +176,6 @@ body {
         background-color: oklch(85% 0.01 250);
         color: oklch(60% 0.01 250);
         cursor: default;
-        transform: none;
     }
 
     &:not(:disabled) {  
@@ -191,6 +191,10 @@ body {
         &:active {
             transform: scale(0.98);
         }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        transition: none;
     }
 }
 
