@@ -200,16 +200,15 @@ body {
 }
 
 .notification {
-    background-color: #333333;
-    border-radius: 5px;
+    background-color: oklch(30% 0 none);
     bottom: 48px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    color: #ffffff;
+    border-radius: 4px;
+    color: oklch(100% 0 none);
     cursor: default;
-    font-size: 14px;
-    padding: 10px 20px;
+    font-size: 0.875rem;
+    padding: 0.625rem 1.25rem;
     position: fixed;
-    right: 80px;
+    right: 64px;
     transition: opacity 1.2s ease;
 }
 
