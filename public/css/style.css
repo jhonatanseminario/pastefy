@@ -96,10 +96,11 @@ body {
         oklch(98% 0.02 250),
         oklch(90% 0.04 250)
     );
+    border: 1px solid oklch(98% 0.02 250);
     border-radius: 8px;
     box-shadow:
-        2px 4px 8px oklch(75% 0.04 250 / 0.4),
-        4px 8px 24px oklch(80% 0.04 250 / 0.25);
+        2px 4px 8px oklch(75% 0.04 250 / 0.6),
+        4px 8px 24px oklch(80% 0.04 250 / 0.4);
     margin-block-end: 6rem;
     margin-block-start: 4rem;
     margin-inline: auto;
@@ -180,12 +181,12 @@ body {
 
     &:not(:disabled) {  
         &:focus-visible {
-            outline: 3px solid oklch(85% 0.15 250);
+            outline: 3px solid oklch(20% 0.05 250);
             outline-offset: 2px;
         }
 
         &:hover {
-            background-color: oklch(45% 0.15 250);
+            background-color: oklch(40% 0.15 250);
         }
         
         &:active {
@@ -247,23 +248,6 @@ body {
     }
 }
 
-.render-button {
-    font-size: 14px;
-    margin: 0 0 24px 6px;
-    padding: 12px 16px;
-    width: 120px;
-
-    &:focus {
-        outline-offset: 3px;
-    }
-
-    @media only screen and (800px > width) {
-        font-size: 11px;
-        margin: 0 0 18px 6px;
-        padding: 10px 12px;
-        width: 100px;
-    }
-}
 
 .paste-content {
     background-color: #ffffff;
@@ -286,6 +270,12 @@ body {
         min-height: 240px;
         padding: 16px;
     }
+}
+
+.render-button {
+    font-size: 0.875rem;
+    margin: 0;
+    padding: 0.75rem 1.5rem;
 }
 
 .no-title {
