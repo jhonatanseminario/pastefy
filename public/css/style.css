@@ -213,48 +213,22 @@ body {
 }
 
 .rendered-form {
-    margin: 96px auto 96px auto;
-    width: 900px;
-    
-    @media only screen and (1000px > width > 799px) {
-        width: 720px;
-    }
-    
-    @media only screen and (800px > width > 600px) {
-        margin: 64px auto 64px auto;
-        padding: 22px 24px;
-        width: 480px;
-    }
-    
-    @media only screen and (600px > width) {
-        margin: 64px auto 64px auto;
-        padding: 22px 24px;
-        width: 360px;
-    }
+    margin-block-start: 12rem;
+    width: min(90vw, 60rem);
 }
 
-
 .paste-content {
-    background-color: #ffffff;
+    background-color: oklch(100% 0 none);
+    border: 2px solid oklch(90% 0 none);
     border-radius: 8px;
-    border: 3px solid #e5e5e5;
-    color: #233241;
-    font-family: 'Roboto Mono', 'Courier New', Consolas, 'Source Code Pro', Menlo, monospace;
-    font-size: 14px;
-    height: fit-content;
-    margin: 16px auto;
-    min-height: 240px;
-    padding: 28px;
+    color: oklch(20% 0.05 250);
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.875rem;
+    margin-block: 1rem;
+    min-height: 16rem;
+    padding: 0.75em 1em;
     white-space: pre-wrap;
     word-wrap: break-word;
-    
-    @media only screen and (800px > width) {
-        border: 2px solid #e5e5e5;
-        font-size: 10px;
-        margin: 8px auto;
-        min-height: 240px;
-        padding: 16px;
-    }
 }
 
 .render-button {
@@ -264,8 +238,8 @@ body {
 }
 
 ::selection {
-    background-color: #4b69ff;
-    color: #ffffff;
+    background-color: oklch(55% 0.15 250);
+    color: oklch(100% 0 none);
 }
 
 .no-title {
