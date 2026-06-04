@@ -220,12 +220,16 @@ body {
     border-radius: 4px;
     bottom: 48px;
     color: oklch(100% 0 none);
-    cursor: default;
     font-size: 0.875rem;
     padding: 0.625rem 1.25rem;
     position: fixed;
     right: 64px;
     transition: opacity 1.2s ease;
+    user-select: none;
+
+    @media (prefers-reduced-motion: reduce) {
+        transition: none;
+    }
 }
 
 .render-button {
