@@ -40,6 +40,11 @@
     margin: 0;
 }
 
+::selection {
+    background-color: oklch(50% 0.2 250);
+    color: oklch(100% 0 none);
+}
+
 body {
     background-color: oklch(100% 0 none);
     color: oklch(30% 0 none);
@@ -72,9 +77,16 @@ body {
     }
 
     @media (width < 800px) {
+    min-width: 9rem;
+    padding: 1rem 2rem;
         font-size: 3rem;
         margin-block-start: 4rem;
     }
+}
+
+.render-title {
+    margin-block: 1rem;
+    margin-inline: 0;
 }
 
 .subtitle {
@@ -111,6 +123,11 @@ body {
         margin-block-start: 3rem;
         padding: 1.3125rem 1.5rem;
     }
+}
+
+.rendered-form {
+    margin-block-start: 8rem;
+    width: min(90vw, 60rem);
 }
 
 .label {
@@ -196,9 +213,19 @@ body {
     }
 
     @media (prefers-reduced-motion: reduce) {
-        transform: none;
         transition: none;
+
+        &:not(:disabled):active {
+            transform: none;
+        }
     }
+}
+
+.render-button {
+    font-size: 0.875rem;
+    margin-block: 0;
+    margin-inline: 0;
+    padding: 0.75rem 1.5rem;
 }
 
 .paste-content {
@@ -217,7 +244,7 @@ body {
 
 .notification {
     background-color: oklch(30% 0 none);
-    border-radius: 4px;
+    border-radius: 8px;
     bottom: 48px;
     color: oklch(100% 0 none);
     font-size: 0.875rem;
@@ -232,23 +259,6 @@ body {
     }
 }
 
-.render-button {
-    font-size: 0.875rem;
-    margin-block: 0;
-    margin-inline: 0;
-    padding: 0.75rem 1.5rem;
-}
-
-.rendered-form {
-    margin-block-start: 8rem;
-    width: min(90vw, 60rem);
-}
-
-::selection {
-    background-color: oklch(50% 0.2 250);
-    color: oklch(100% 0 none);
-}
-
 .no-title {
     color: oklch(40% 0.05 250);
     font-style: italic;
@@ -256,11 +266,6 @@ body {
 
 .hidden {
     display: none;
-}
-
-.render-title {
-    margin-block: 1rem;
-    margin-inline: 0;
 }
 
 .hidden-notification {
