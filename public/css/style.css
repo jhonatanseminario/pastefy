@@ -224,7 +224,7 @@ body {
     padding: 0.625rem 1.25rem;
     position: fixed;
     right: 64px;
-    transition: opacity 1.2s ease;
+    transition: opacity 0.4s ease;
     user-select: none;
 
     @media (prefers-reduced-motion: reduce) {
@@ -234,7 +234,8 @@ body {
 
 .render-button {
     font-size: 0.875rem;
-    margin: 0;
+    margin-block: 0;
+    margin-inline: 0;
     padding: 0.75rem 1.5rem;
 }
 
@@ -244,11 +245,12 @@ body {
 }
 
 ::selection {
-    background-color: oklch(55% 0.15 250);
+    background-color: oklch(50% 0.2 250);
     color: oklch(100% 0 none);
 }
 
 .no-title {
+    color: oklch(40% 0.05 250);
     font-style: italic;
 }
 
@@ -257,7 +259,8 @@ body {
 }
 
 .render-title {
-    margin: 1rem 0;
+    margin-block: 1rem;
+    margin-inline: 0;
 }
 
 .hidden-notification {
